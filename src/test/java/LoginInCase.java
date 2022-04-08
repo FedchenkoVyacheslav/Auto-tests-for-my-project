@@ -9,7 +9,9 @@ import static org.junit.Assert.*;
 
 public class LoginInCase {
     static WebDriver driver;
-    String URL = "https://fedchenkovyacheslav.github.io/";
+    private final String URL = "https://fedchenkovyacheslav.github.io/";
+    private final String EMAIL = "t1@gmail.com";
+    private final String PASSWORD = "12345678";
     MainPage myMainPage;
 
     @Before
@@ -22,13 +24,20 @@ public class LoginInCase {
     }
 
     @Test
-    public void main(){
+    public void loginLogoutToProfile(){
         myMainPage
                 .clickOnSignIn()
-                .loginWithCredential("t1@gmail.com", "12345678")
-                .pause(4000)
-                .goToProfilePage();
-        assertEquals(driver.getCurrentUrl(),"https://fedchenkovyacheslav.github.io/pages/profile/index.html");
+                .loginWithCredential(EMAIL, PASSWORD)
+                .checkValidMessageOnLogin()
+                .goToProfilePage()
+                .checkUrlIsValid(URL + "pages/profile/")
+                .clickOnSignOut()
+                .checkUrlIsValid(URL);
+    }
+
+    @Test
+    public void checkValidationErrorsOnLogin(){
+
     }
 
     @After

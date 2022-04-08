@@ -1,15 +1,20 @@
 package Pages;
 
+import Elements.ValidationMessage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static org.junit.Assert.*;
+
+import java.util.List;
+
 public abstract class BasePage {
     private final WebDriver driver;
 
-    public BasePage (WebDriver driver) {
+    public BasePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
@@ -22,31 +27,57 @@ public abstract class BasePage {
     private WebElement confirmButton;
     @FindBy(xpath = "//a[contains(@class, 'header__nav-item header__profile') and text()='My profile']")
     private WebElement profileButton;
+    @FindBy(xpath = "//button[text()='Sign in']")
+    private WebElement signInButton;
+    @FindBy(xpath = "//button[text()='Sign out']")
+    private WebElement signOutButton;
 
     public BasePage clickOnSignIn() {
-        driver.findElement(By.xpath("//button[text()='Sign in']")).click();
+        signInButton.click();
         return this;
     }
 
-    public void typeEmail (String email) {
+    public BasePage clickOnSignOut() {
+        signOutButton.click();
+        pause(1000);
+        return this;
+    }
+
+    public void typeEmail(String email) {
         emailInput.sendKeys(email);
     }
 
-    public void typePassword (String password) {
+    public void typePassword(String password) {
         passwordInput.sendKeys(password);
     }
 
-    public BasePage loginWithCredential (String email, String password) {
+    public BasePage loginWithCredential(String email, String password) {
         this.typeEmail(email);
         this.typePassword(password);
         confirmButton.click();
+        pause(4000);
         return this;
     }
 
-    public void goToProfilePage () {
+    public BasePage goToProfilePage() {
         profileButton.click();
-        new ProfilePage(driver);
+        pause(2000);
+        return this;
     }
+
+    public BasePage checkValidMessageOnLogin() {
+        List<String> messages = ValidationMessage.getValidMessages(driver, "form-sing-in");
+        for (String message:messages) {
+            assertEquals("All right", message);
+        }
+        return this;
+    }
+
+    public BasePage checkUrlIsValid(String url) {
+        assertEquals(driver.getCurrentUrl(), url + "index.html");
+        return this;
+    }
+
     public BasePage pause(int millis) {
         try {
             Thread.sleep(millis);
