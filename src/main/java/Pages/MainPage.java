@@ -1,11 +1,16 @@
 package Pages;
 
 import Elements.Checkbox;
+import Elements.ValidationMessage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class MainPage extends BasePage{
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+public class MainPage extends BasePage {
     public MainPage(WebDriver driver) {
         super(driver);
     }
@@ -26,7 +31,6 @@ public class MainPage extends BasePage{
     private WebElement confirmCheckbox;
     @FindBy(xpath = "//button[text()='Send']")
     private WebElement confirmMessageButton;
-
 
     public MainPage clickOnSendMessage() {
         sendMessageButton.click();
@@ -76,6 +80,42 @@ public class MainPage extends BasePage{
         this.typeTextMessage(textMessage);
         this.checkConsentMessage();
         clickOnConfirmSendMessage();
+        return this;
+    }
+
+    public MainPage checkInvalidMessage(String innerText) {
+        String message = ValidationMessage.getIvnalidMessage(driver, "form-message");
+        assertEquals(innerText, message);
+        return this;
+    }
+
+    public MainPage clearInvalidInput() {
+        driver.findElement(By.xpath("//form[@name='form-message']//div[@class='invalid-feedback']/../input")).clear();
+        return this;
+    }
+
+    public MainPage clearInvalidTextArea() {
+        driver.findElement(By.xpath("//form[@name='form-message']//div[@class='invalid-feedback']/../textarea")).clear();
+        return this;
+    }
+
+    public MainPage checkConsentError() {
+        WebElement invalidCheckbox = driver.findElement(By.xpath("//form[@name='form-message']//span[contains(@class, 'form__checkbox-indicator_bad')]"));
+        assertNotNull(invalidCheckbox);
+        return this;
+    }
+
+    public MainPage checkInvalidInput(String message) {
+        clickOnConfirmSendMessage();
+        checkInvalidMessage(message);
+        clearInvalidInput();
+        return this;
+    }
+
+    public MainPage checkInvalidTextArea(String message) {
+        clickOnConfirmSendMessage();
+        checkInvalidMessage(message);
+        clearInvalidTextArea();
         return this;
     }
 }
