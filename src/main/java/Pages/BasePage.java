@@ -1,6 +1,7 @@
 package Pages;
 
 import Elements.ValidationMessage;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +12,12 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 public abstract class BasePage {
-    private final WebDriver driver;
+    protected final WebDriver driver;
+
+    public static String getRandomLogin() {
+        String generatedString = RandomStringUtils.randomAlphabetic(7);
+        return generatedString + "@gmail.com";
+    }
 
     public BasePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -60,8 +66,8 @@ public abstract class BasePage {
     public BasePage loginWithCredential(String email, String password) {
         this.typeEmail(email);
         this.typePassword(password);
-        logInButton.click();
-        pause(4000);
+        clickOnLogIn();
+        pause(2000);
         return this;
     }
 
@@ -71,13 +77,15 @@ public abstract class BasePage {
         return this;
     }
 
-    public BasePage checkValidMessageOnLogin() {
-        List<String> messages = ValidationMessage.getValidMessages(driver, "form-sing-in");
-        for (String message:messages) {
+    public BasePage checkValidMessagesInForm(String formClassName) {
+        List<String> messages = ValidationMessage.getValidMessages(driver, formClassName);
+        assertTrue(messages.size() > 0);
+        for (String message : messages) {
             assertEquals("All right", message);
         }
         return this;
     }
+
     public BasePage checkInvalidMessageOnLogin(String innerText) {
         String message = ValidationMessage.getIvnalidMessage(driver, "form-sing-in");
         assertEquals(innerText, message);
