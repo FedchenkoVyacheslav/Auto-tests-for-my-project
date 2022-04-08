@@ -1,7 +1,6 @@
 package Pages;
 
 import Elements.ValidationMessage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,7 +23,7 @@ public abstract class BasePage {
     @FindBy(xpath = "//input[@id='form-password-sing-in']")
     private WebElement passwordInput;
     @FindBy(xpath = "//button[contains(@class, 'button_modal-sing-in')]")
-    private WebElement confirmButton;
+    private WebElement logInButton;
     @FindBy(xpath = "//a[contains(@class, 'header__nav-item header__profile') and text()='My profile']")
     private WebElement profileButton;
     @FindBy(xpath = "//button[text()='Sign in']")
@@ -43,18 +42,25 @@ public abstract class BasePage {
         return this;
     }
 
-    public void typeEmail(String email) {
-        emailInput.sendKeys(email);
+    public BasePage clickOnLogIn() {
+        logInButton.click();
+        return this;
     }
 
-    public void typePassword(String password) {
+    public BasePage typeEmail(String email) {
+        emailInput.sendKeys(email);
+        return this;
+    }
+
+    public BasePage typePassword(String password) {
         passwordInput.sendKeys(password);
+        return this;
     }
 
     public BasePage loginWithCredential(String email, String password) {
         this.typeEmail(email);
         this.typePassword(password);
-        confirmButton.click();
+        logInButton.click();
         pause(4000);
         return this;
     }
@@ -70,6 +76,11 @@ public abstract class BasePage {
         for (String message:messages) {
             assertEquals("All right", message);
         }
+        return this;
+    }
+    public BasePage checkInvalidMessageOnLogin(String innerText) {
+        String message = ValidationMessage.getIvnalidMessage(driver, "form-sing-in");
+        assertEquals(innerText, message);
         return this;
     }
 

@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
-import static org.junit.Assert.*;
 
 public class LoginInCase {
     static WebDriver driver;
@@ -37,7 +36,15 @@ public class LoginInCase {
 
     @Test
     public void checkValidationErrorsOnLogin(){
-
+        myMainPage
+                .clickOnSignIn()
+                .clickOnLogIn()
+                .checkInvalidMessageOnLogin("This field is required")
+                .typeEmail("1")
+                .clickOnLogIn()
+                .checkInvalidMessageOnLogin("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
+                .loginWithCredential("test@mail.com","1")
+                .checkInvalidMessageOnLogin("This combination, mail and password were not found!");
     }
 
     @After
