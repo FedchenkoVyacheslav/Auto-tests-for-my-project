@@ -42,6 +42,11 @@ public class RegistrationCase {
                 .checkUrlIsValid(URL);
     }
 
+    @Test
+    public void checkValidationErrorsOnRegister(){
+
+    }
+
     @After
     public void quit(){
         driver.quit();

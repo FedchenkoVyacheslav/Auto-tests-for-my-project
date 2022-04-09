@@ -1,6 +1,5 @@
 package Pages;
 
-import Elements.Checkbox;
 import Elements.ValidationMessage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -78,39 +77,17 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    public MainPage checkInvalidMessage(String innerText) {
-        String message = ValidationMessage.getIvnalidMessage(driver, "form-message");
-        assertEquals(innerText, message);
-        return this;
-    }
-
-    public MainPage clearInvalidInput() {
-        driver.findElement(By.xpath("//form[@name='form-message']//div[@class='invalid-feedback']/../input")).clear();
-        return this;
-    }
-
-    public MainPage clearInvalidTextArea() {
-        driver.findElement(By.xpath("//form[@name='form-message']//div[@class='invalid-feedback']/../textarea")).clear();
-        return this;
-    }
-
-    public MainPage checkConsentError() {
-        WebElement invalidCheckbox = driver.findElement(By.xpath("//form[@name='form-message']//span[contains(@class, 'form__checkbox-indicator_bad')]"));
-        assertNotNull(invalidCheckbox);
-        return this;
-    }
-
     public MainPage checkInvalidInput(String message) {
         clickOnConfirmSendMessage();
-        checkInvalidMessage(message);
-        clearInvalidInput();
+        checkInvalidMessage("form-message", message);
+        clearInvalidInput("form-message");
         return this;
     }
 
     public MainPage checkInvalidTextArea(String message) {
         clickOnConfirmSendMessage();
-        checkInvalidMessage(message);
-        clearInvalidTextArea();
+        checkInvalidMessage("form-message", message);
+        clearInvalidTextArea("form-message");
         return this;
     }
 }

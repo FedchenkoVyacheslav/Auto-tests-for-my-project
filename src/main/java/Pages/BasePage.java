@@ -3,6 +3,7 @@ package Pages;
 import Elements.Checkbox;
 import Elements.ValidationMessage;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -177,6 +178,28 @@ public abstract class BasePage {
 
     public BasePage checkUrlIsValid(String url) {
         assertEquals(driver.getCurrentUrl(), url + "index.html");
+        return this;
+    }
+
+    public BasePage clearInvalidInput(String formName) {
+        driver.findElement(By.xpath("//form[@name='" + formName + "']//div[@class='invalid-feedback']/../input")).clear();
+        return this;
+    }
+
+    public BasePage clearInvalidTextArea(String formClass) {
+        driver.findElement(By.xpath("//form[@name='" + formClass + "']//div[@class='invalid-feedback']/../textarea")).clear();
+        return this;
+    }
+
+    public BasePage checkInvalidMessage(String formClass, String innerText) {
+        String message = ValidationMessage.getIvnalidMessage(driver, formClass);
+        assertEquals(innerText, message);
+        return this;
+    }
+
+    public BasePage checkConsentError(String formClass) {
+        WebElement invalidCheckbox = driver.findElement(By.xpath("//form[@name='" + formClass + "']//span[contains(@class, 'form__checkbox-indicator_bad')]"));
+        assertNotNull(invalidCheckbox);
         return this;
     }
 

@@ -69,7 +69,7 @@ public class SendMessageCase {
                 .checkInvalidTextArea("Your message is too short")
                 .typeTextMessage(TEXT)
                 .clickOnConfirmSendMessage()
-                .checkConsentError();
+                .checkConsentError(SEND_MESSAGE);
     }
 
     @After
