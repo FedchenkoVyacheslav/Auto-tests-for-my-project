@@ -67,18 +67,13 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    public MainPage checkConsentMessage() {
-        Checkbox.checkCheckBox(driver, "form-message");
-        return this;
-    }
-
     public MainPage sendMessage(String name, String message, String email, String phone, String textMessage) {
         this.typeName(name);
         this.typeMessage(message);
         this.typeMessageEmail(email);
         this.typePhone(phone);
         this.typeTextMessage(textMessage);
-        this.checkConsentMessage();
+        this.checkConsentMessage("form-message");
         clickOnConfirmSendMessage();
         return this;
     }

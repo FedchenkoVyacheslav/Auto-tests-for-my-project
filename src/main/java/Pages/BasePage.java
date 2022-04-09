@@ -1,5 +1,6 @@
 package Pages;
 
+import Elements.Checkbox;
 import Elements.ValidationMessage;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
@@ -36,6 +37,24 @@ public abstract class BasePage {
     private WebElement signInButton;
     @FindBy(xpath = "//button[text()='Sign out']")
     private WebElement signOutButton;
+    @FindBy(xpath = "//button[text()='Register']")
+    private WebElement registerButton;
+    @FindBy(xpath = "//input[@id='form-email-register']")
+    private WebElement emailRegisterInput;
+    @FindBy(xpath = "//input[@id='form-name-register']")
+    private WebElement nameRegisterInput;
+    @FindBy(xpath = "//input[@id='form-surname-register']")
+    private WebElement surnameRegisterInput;
+    @FindBy(xpath = "//input[@id='form-password-register']")
+    private WebElement passwordRegisterInput;
+    @FindBy(xpath = "//input[@id='form-password-repeat-register']")
+    private WebElement passwordRepeatRegisterInput;
+    @FindBy(xpath = "//input[@id='form-location-register']")
+    private WebElement locationRegisterInput;
+    @FindBy(xpath = "//input[@id='form-age-register']")
+    private WebElement ageRegisterInput;
+    @FindBy(xpath = "//button[text()='Sign up']")
+    private WebElement signUpButton;
 
     public BasePage clickOnSignIn() {
         signInButton.click();
@@ -53,6 +72,16 @@ public abstract class BasePage {
         return this;
     }
 
+    public BasePage clickOnRegister() {
+        registerButton.click();
+        return this;
+    }
+
+    public BasePage clickOnSignUp() {
+        signUpButton.click();
+        return this;
+    }
+
     public BasePage typeEmail(String email) {
         emailInput.sendKeys(email);
         return this;
@@ -60,6 +89,41 @@ public abstract class BasePage {
 
     public BasePage typePassword(String password) {
         passwordInput.sendKeys(password);
+        return this;
+    }
+
+    public BasePage typeRegisterEmail(String email) {
+        emailRegisterInput.sendKeys(email);
+        return this;
+    }
+
+    public BasePage typeRegisterName(String name) {
+        nameRegisterInput.sendKeys(name);
+        return this;
+    }
+
+    public BasePage typeRegisterSurname(String surname) {
+        surnameRegisterInput.sendKeys(surname);
+        return this;
+    }
+
+    public BasePage typeRegisterPassword(String password) {
+        passwordRegisterInput.sendKeys(password);
+        return this;
+    }
+
+    public BasePage typeRegisterRepeatPassword(String password) {
+        passwordRepeatRegisterInput.sendKeys(password);
+        return this;
+    }
+
+    public BasePage typeRegisterLocation(String location) {
+        locationRegisterInput.sendKeys(location);
+        return this;
+    }
+
+    public BasePage typeRegisterAge(String age) {
+        ageRegisterInput.sendKeys(age);
         return this;
     }
 
@@ -71,9 +135,28 @@ public abstract class BasePage {
         return this;
     }
 
+    public BasePage registerUser(String email, String name, String surname, String password, String passwordRep, String location, String age) {
+        this.typeRegisterEmail(email);
+        this.typeRegisterName(name);
+        this.typeRegisterSurname(surname);
+        this.typeRegisterPassword(password);
+        this.typeRegisterRepeatPassword(passwordRep);
+        this.typeRegisterLocation(location);
+        this.typeRegisterAge(age);
+        this.checkConsentMessage("form-register");
+        clickOnSignUp();
+        pause(2000);
+        return this;
+    }
+
     public BasePage goToProfilePage() {
         profileButton.click();
         pause(2000);
+        return this;
+    }
+
+    public BasePage checkConsentMessage(String formName) {
+        Checkbox.checkCheckBox(driver, formName);
         return this;
     }
 
