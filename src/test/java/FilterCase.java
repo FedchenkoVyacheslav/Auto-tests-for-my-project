@@ -34,7 +34,19 @@ public class FilterCase {
 
     @Test
     public void viewsSearch(){
-
+        myMainPage
+                .goToBlogPage()
+                .clickOnReset()
+                .checkTags(ALL_TAGS)
+                .showNumberOfViews("100-500")
+                .clickOnSearch()
+                .checkNumberOfViewsInBlogs("100-500")
+                .showNumberOfViews("500-1000")
+                .clickOnSearch()
+                .checkNumberOfViewsInBlogs("500-1000")
+                .showNumberOfViews("1000-2000")
+                .clickOnSearch()
+                .checkNumberOfViewsInBlogs("1000-2000");
     }
 
     @Test
