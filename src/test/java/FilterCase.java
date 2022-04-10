@@ -49,7 +49,16 @@ public class FilterCase {
 
     @Test
     public void showByCheck(){
-
+        myMainPage
+                .goToBlogPage()
+                .clickOnReset()
+                .checkTags(ALL_TAGS)
+                .showNumberOfBlogs("show 10")
+                .clickOnSearch()
+                .checkNumberOfBlogsOnPage(10)
+                .showNumberOfBlogs("show 5")
+                .clickOnSearch()
+                .checkNumberOfBlogsOnPage(5);
     }
 
     @Test
