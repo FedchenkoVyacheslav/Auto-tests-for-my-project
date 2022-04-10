@@ -40,34 +40,40 @@ public class SendMessageCase {
     public void checkValidationErrors(){
         myMainPage
                 .clickOnSendMessage()
-                .checkInvalidInput("This field is required")
+
+                .checkInputErrorInMessageForm("This field is required")
                 .typeName("1")
-                .checkInvalidInput("This name is not valid")
+                .checkInputErrorInMessageForm("This name is not valid")
                 .typeName("a")
-                .checkInvalidInput("Your name is too short or too long")
+                .checkInputErrorInMessageForm("Your name is too short or too long")
                 .typeName("qwertyuiopasdfghjklzx")
-                .checkInvalidInput("Your name is too short or too long")
+                .checkInputErrorInMessageForm("Your name is too short or too long")
                 .typeName(NAME)
-                .checkInvalidInput("This field is required")
+
+                .checkInputErrorInMessageForm("This field is required")
                 .typeMessage("1")
-                .checkInvalidInput("This message is not valid")
+                .checkInputErrorInMessageForm("This message is not valid")
                 .typeMessage("a")
-                .checkInvalidInput("Your message is too short or too long")
+                .checkInputErrorInMessageForm("Your message is too short or too long")
                 .typeMessage("qwertyuiopasdfghjklzx")
-                .checkInvalidInput("Your message is too short or too long")
+                .checkInputErrorInMessageForm("Your message is too short or too long")
                 .typeMessage(MESSAGE)
-                .checkInvalidInput("This field is required")
+
+                .checkInputErrorInMessageForm("This field is required")
                 .typeMessageEmail("1")
-                .checkInvalidInput("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
+                .checkInputErrorInMessageForm("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
                 .typeMessageEmail(EMAIL)
-                .checkInvalidInput("This field is required")
+
+                .checkInputErrorInMessageForm("This field is required")
                 .typePhone("1")
-                .checkInvalidInput("Please enter a valid phone number")
+                .checkInputErrorInMessageForm("Please enter a valid phone number")
                 .typePhone(PHONE)
-                .checkInvalidTextArea("This field is required")
+
+                .checkTextAreaErrorInMessageForm("This field is required")
                 .typeTextMessage("1")
-                .checkInvalidTextArea("Your message is too short")
+                .checkTextAreaErrorInMessageForm("Your message is too short")
                 .typeTextMessage(TEXT)
+
                 .clickOnConfirmSendMessage()
                 .checkConsentError(SEND_MESSAGE);
     }

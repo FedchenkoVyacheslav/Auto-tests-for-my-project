@@ -1,13 +1,8 @@
 package Pages;
 
-import Elements.ValidationMessage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class MainPage extends BasePage {
     public MainPage(WebDriver driver) {
@@ -77,17 +72,17 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    public MainPage checkInvalidInput(String message) {
+    public MainPage checkInputErrorInMessageForm(String message) {
         clickOnConfirmSendMessage();
         checkInvalidMessage("form-message", message);
-        clearInvalidInput("form-message");
+        clearInvalidInput("form-message", "input");
         return this;
     }
 
-    public MainPage checkInvalidTextArea(String message) {
+    public MainPage checkTextAreaErrorInMessageForm(String message) {
         clickOnConfirmSendMessage();
         checkInvalidMessage("form-message", message);
-        clearInvalidTextArea("form-message");
+        clearInvalidInput("form-message", "textarea");
         return this;
     }
 }

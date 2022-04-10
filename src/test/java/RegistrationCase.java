@@ -44,7 +44,60 @@ public class RegistrationCase {
 
     @Test
     public void checkValidationErrorsOnRegister(){
+        myMainPage
+                .clickOnRegister()
+                .checkErrorInRegistrationForm("This field is required")
+                .typeRegisterEmail("1")
+                .checkErrorInRegistrationForm("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
+                .typeRegisterEmail(EMAIL)
 
+                .checkErrorInRegistrationForm("This field is required")
+                .typeRegisterName("1")
+                .checkErrorInRegistrationForm("This name is not valid")
+                .typeRegisterName("a")
+                .checkErrorInRegistrationForm("Your name is too short or too long")
+                .typeRegisterName("qwertyuiopasdfghjklzx")
+                .checkErrorInRegistrationForm("Your name is too short or too long")
+                .typeRegisterName(NAME)
+
+                .checkErrorInRegistrationForm("This field is required")
+                .typeRegisterSurname("1")
+                .checkErrorInRegistrationForm("This surname is not valid")
+                .typeRegisterSurname("a")
+                .checkErrorInRegistrationForm("Your surname is too short or too long")
+                .typeRegisterSurname("qwertyuiopasdfghjklzx")
+                .checkErrorInRegistrationForm("Your surname is too short or too long")
+                .typeRegisterSurname(SURNAME)
+
+                .checkErrorInRegistrationForm("This field is required")
+                .typeRegisterPassword("1")
+                .checkErrorInRegistrationForm("Password must be between 3 and 20 characters")
+                .typeRegisterPassword("1234567890asdfghjklzx")
+                .checkErrorInRegistrationForm("Password must be between 3 and 20 characters")
+                .typeRegisterPassword(PASSWORD)
+
+                .checkErrorInRegistrationForm("This field is required")
+                .typeRegisterRepeatPassword("1")
+                .checkErrorInRegistrationForm("Password mismatch")
+                .typeRegisterRepeatPassword(PASSWORD)
+
+                .checkErrorInRegistrationForm("This field is required")
+                .typeRegisterLocation("1")
+                .checkErrorInRegistrationForm("This location is not valid")
+                .typeRegisterLocation("a")
+                .checkErrorInRegistrationForm("Location name is too short or too long")
+                .typeRegisterLocation("united states of america state california")
+                .checkErrorInRegistrationForm("Location name is too short or too long")
+                .typeRegisterLocation(LOCATION)
+
+                .typeRegisterAge("17")
+                .checkErrorInRegistrationForm("This age is not valid")
+                .typeRegisterAge("101")
+                .checkErrorInRegistrationForm("This age is not valid")
+                .typeRegisterAge(AGE)
+
+                .clickOnSignUp()
+                .checkConsentError(REGISTER);
     }
 
     @After

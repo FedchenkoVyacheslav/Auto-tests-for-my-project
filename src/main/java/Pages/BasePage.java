@@ -170,25 +170,22 @@ public abstract class BasePage {
         return this;
     }
 
-    public BasePage checkInvalidMessageOnLogin(String innerText) {
-        String message = ValidationMessage.getIvnalidMessage(driver, "form-sing-in");
-        assertEquals(innerText, message);
-        return this;
-    }
-
     public BasePage checkUrlIsValid(String url) {
         assertEquals(driver.getCurrentUrl(), url + "index.html");
         return this;
     }
 
-    public BasePage clearInvalidInput(String formName) {
-        driver.findElement(By.xpath("//form[@name='" + formName + "']//div[@class='invalid-feedback']/../input")).clear();
-        return this;
-    }
-
-    public BasePage clearInvalidTextArea(String formClass) {
-        driver.findElement(By.xpath("//form[@name='" + formClass + "']//div[@class='invalid-feedback']/../textarea")).clear();
-        return this;
+    public BasePage clearInvalidInput(String formName, String element) {
+        switch (element) {
+            case "input":
+                driver.findElement(By.xpath("//form[@name='" + formName + "']//div[@class='invalid-feedback']/../input")).clear();
+                return this;
+            case "textarea":
+                driver.findElement(By.xpath("//form[@name='" + formName + "']//div[@class='invalid-feedback']/../textarea")).clear();
+                return this;
+            default:
+                throw new IllegalStateException("Unexpected value: " + element);
+        }
     }
 
     public BasePage checkInvalidMessage(String formClass, String innerText) {
@@ -200,6 +197,20 @@ public abstract class BasePage {
     public BasePage checkConsentError(String formClass) {
         WebElement invalidCheckbox = driver.findElement(By.xpath("//form[@name='" + formClass + "']//span[contains(@class, 'form__checkbox-indicator_bad')]"));
         assertNotNull(invalidCheckbox);
+        return this;
+    }
+
+    public BasePage checkErrorInLoginForm(String message) {
+        clickOnLogIn();
+        checkInvalidMessage("form-sing-in", message);
+        clearInvalidInput("form-sing-in", "input");
+        return this;
+    }
+
+    public BasePage checkErrorInRegistrationForm(String message) {
+        clickOnSignUp();
+        checkInvalidMessage("form-register", message);
+        clearInvalidInput("form-register", "input");
         return this;
     }
 

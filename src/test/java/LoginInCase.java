@@ -39,13 +39,12 @@ public class LoginInCase {
     public void checkValidationErrorsOnLogin(){
         myMainPage
                 .clickOnSignIn()
-                .clickOnLogIn()
-                .checkInvalidMessageOnLogin("This field is required")
+                .checkErrorInLoginForm("This field is required")
                 .typeEmail("1")
-                .clickOnLogIn()
-                .checkInvalidMessageOnLogin("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
-                .loginWithCredential("test@mail.com","1")
-                .checkInvalidMessageOnLogin("This combination, mail and password were not found!");
+                .checkErrorInLoginForm("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
+                .typeEmail("test@mail.com")
+                .typePassword("1")
+                .checkErrorInLoginForm("This combination, mail and password were not found!");
     }
 
     @After
