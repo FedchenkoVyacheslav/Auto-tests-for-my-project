@@ -15,9 +15,14 @@ public class EditProfileCase {
     private final String NAME = "Tom";
     private final String SURNAME = "Anderson";
     private final String PASSWORD = "12345678";
-    private final String NEW_PASSWORD = "87654321";
     private final String LOCATION = "New York City";
     private final String AGE = "35";
+    private String NEW_EMAIL = BasePage.getRandomLogin();
+    private final String NEW_NAME = "Neo";
+    private final String NEW_SURNAME = "The One";
+    private final String NEW_PASSWORD = "87654321";
+    private final String NEW_LOCATION = "Zion";
+    private final String NEW_AGE = "36";
     MainPage myMainPage;
 
     @Before

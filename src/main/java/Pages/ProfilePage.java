@@ -25,10 +25,12 @@ public class ProfilePage extends BasePage{
     private WebElement changePasswordButton;
     @FindBy(xpath = "//button[text()='Change other data']")
     private WebElement changeDataButton;
-    @FindBy(xpath = "//button[text()='Delete account']")
+    @FindBy(xpath = "//div[@class='profile__list-content']//button[text()='Delete account']")
     private WebElement deleteAccountButton;
     @FindBy(xpath = "//form[@name='form-password-edit']//button[text()='Change password']")
     private WebElement changePasswordButtonModal;
+    @FindBy(xpath = "//div[contains(@class, 'form_modal-profile-delete')]//button[text()='Delete account']")
+    private WebElement deleteAccountButtonModal;
     @FindBy(xpath = "//input[@id='form-old-password-edit']")
     private WebElement oldPasswordInput;
     @FindBy(xpath = "//input[@id='form-new-password-edit']")
@@ -62,6 +64,12 @@ public class ProfilePage extends BasePage{
 
     public ProfilePage clickOnChangePasswordModalButton() {
         changePasswordButtonModal.click();
+        return this;
+    }
+
+    public ProfilePage clickOnDeleteAccountModalButton() {
+        deleteAccountButtonModal.click();
+        pause(2000);
         return this;
     }
 
