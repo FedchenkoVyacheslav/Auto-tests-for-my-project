@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class FilterCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
+    private int ALL_TAGS[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
     MainPage myMainPage;
 
     @Before
@@ -24,7 +25,11 @@ public class FilterCase {
     @Test
     public void tagsSearch(){
         myMainPage
-                .goToBlogPage();
+                .goToBlogPage()
+                .clickOnReset()
+                .checkTag(7)
+                .clickOnSearch()
+                .checkBlogTag(7);
     }
 
     @Test

@@ -1,12 +1,16 @@
 package Pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
+import static java.lang.Integer.parseInt;
 import static org.junit.Assert.*;
 
-public class BlogPage extends BasePage{
+public class BlogPage extends BasePage {
     public BlogPage(WebDriver driver) {
         super(driver);
     }
@@ -18,7 +22,23 @@ public class BlogPage extends BasePage{
     @FindBy(xpath = "//p[@class='blog__message']")
     private WebElement searchMessageError;
 
-    public BlogPage checkTags() {
+    public BlogPage checkTags(int tagNumbers[]) {
+        for (int tagNumber : tagNumbers) {
+            driver.findElement(By.xpath("//div[@class='filter__tag-box']//input[@aria-label='tag " + tagNumber + "']/..")).click();
+        }
+        return this;
+    }
+
+    public BlogPage checkTag(int tagNumber) {
+        driver.findElement(By.xpath("//div[@class='filter__tag-box']//input[@aria-label='tag " + tagNumber + "']/..")).click();
+        return this;
+    }
+
+    public BlogPage checkBlogTag(int tagNumber) {
+        List<WebElement> blogTags = driver.findElements(By.xpath("//li[contains(@class, 'blog__tag')]"));
+        for (WebElement blogTag : blogTags) {
+            assertEquals(tagNumber, parseInt(blogTag.getAttribute("ariaLabel").replaceAll("\\D+","")));
+        }
         return this;
     }
 
@@ -37,3 +57,4 @@ public class BlogPage extends BasePage{
         return this;
     }
 }
+//div[@class='filter__tag-box']//input[@aria-label='tag 1']/..
