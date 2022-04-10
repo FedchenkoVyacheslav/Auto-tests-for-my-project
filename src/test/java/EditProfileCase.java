@@ -101,6 +101,58 @@ public class EditProfileCase {
                 .typeNewPasswordRepeat(NEW_PASSWORD);
     }
 
+    @Test
+    public void checkValidationErrorsOnEditData() {
+        myMainPage
+                .clickOnRegister()
+                .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
+                .clickOnSignIn()
+                .loginWithCredential(EMAIL, PASSWORD)
+                .goToProfilePage()
+                .clickOnChangeDataButton()
+
+                .checkInputErrorInChangeDataForm("This field is required")
+                .typeNewEmail("1")
+                .checkInputErrorInChangeDataForm("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
+                .typeNewEmail(NEW_EMAIL)
+
+                .checkInputErrorInChangeDataForm("This field is required")
+                .typeNewName("1")
+                .checkInputErrorInChangeDataForm("This name is not valid")
+                .typeNewName("a")
+                .checkInputErrorInChangeDataForm("Your name is too short or too long")
+                .typeNewName("qwertyuiopasdfghjklzx")
+                .checkInputErrorInChangeDataForm("Your name is too short or too long")
+                .typeNewName(NEW_NAME)
+
+                .checkInputErrorInChangeDataForm("This field is required")
+                .typeNewSurname("1")
+                .checkInputErrorInChangeDataForm("This surname is not valid")
+                .typeNewSurname("a")
+                .checkInputErrorInChangeDataForm("Your surname is too short or too long")
+                .typeNewSurname("qwertyuiopasdfghjklzx")
+                .checkInputErrorInChangeDataForm("Your surname is too short or too long")
+                .typeNewSurname(NEW_SURNAME)
+
+                .checkInputErrorInChangeDataForm("This field is required")
+                .typeNewLocation("1")
+                .checkInputErrorInChangeDataForm("This location is not valid")
+                .typeNewLocation("a")
+                .checkInputErrorInChangeDataForm("Location name is too short or too long")
+                .typeNewLocation("united states of america state california")
+                .checkInputErrorInChangeDataForm("Location name is too short or too long")
+                .typeNewLocation(NEW_LOCATION)
+
+                .checkInputErrorInChangeDataForm("This field is required")
+                .typeNewAge("-1")
+                .checkInputErrorInChangeDataForm("This age is not valid")
+                .typeNewAge("101")
+                .checkInputErrorInChangeDataForm("This age is not valid")
+                .typeNewAge(NEW_AGE)
+
+                .checkInputErrorInChangeDataForm("You forgot to choose a photo");
+    }
+
     @After
     public void quit(){
         driver.quit();

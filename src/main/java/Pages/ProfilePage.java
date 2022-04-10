@@ -167,4 +167,11 @@ public class ProfilePage extends BasePage{
         clearInvalidInput("form-password-edit", "input");
         return this;
     }
+
+    public ProfilePage checkInputErrorInChangeDataForm(String message) {
+        clickOnSubmitDataButton();
+        checkInvalidMessage("form-editing-data", message);
+        clearInvalidInput("form-editing-data", "input");
+        return this;
+    }
 }
