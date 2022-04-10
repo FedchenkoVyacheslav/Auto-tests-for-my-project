@@ -35,6 +35,7 @@ public class RegistrationCase {
                 .clickOnRegister()
                 .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
                 .clickOnSignIn()
+                .checkValidMessagesInForm(REGISTER)
                 .loginWithCredential(EMAIL, PASSWORD)
                 .goToProfilePage()
                 .confirmSavedValues(NAME, SURNAME, EMAIL, LOCATION, AGE)

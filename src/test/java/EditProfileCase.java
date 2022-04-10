@@ -24,6 +24,8 @@ public class EditProfileCase {
     private final String NEW_LOCATION = "Zion";
     private final String NEW_AGE = "36";
     private final String PATH = "src/test/resources/testData/neo_matrix.jpg";
+    private final String PASSWORD_EDIT = "form-password-edit";
+    private final String DATA_EDIT = "form-editing-data";
     MainPage myMainPage;
 
     @Before
@@ -45,6 +47,7 @@ public class EditProfileCase {
                 .goToProfilePage()
                 .clickOnChangePasswordButton()
                 .changePassword(PASSWORD, NEW_PASSWORD, NEW_PASSWORD)
+                .checkValidMessagesInForm(PASSWORD_EDIT)
                 .clickOnSignOut()
                 .clickOnSignIn()
                 .loginWithCredential(EMAIL, NEW_PASSWORD)
@@ -62,6 +65,7 @@ public class EditProfileCase {
                 .goToProfilePage()
                 .clickOnChangeDataButton()
                 .changeData(NEW_EMAIL, NEW_NAME, NEW_SURNAME, NEW_LOCATION, NEW_AGE, PATH)
+                .checkValidMessagesInForm(DATA_EDIT)
                 .clickOnSignOut()
                 .clickOnSignIn()
                 .loginWithCredential(NEW_EMAIL, PASSWORD)

@@ -163,7 +163,6 @@ public abstract class BasePage {
 
     public BasePage checkValidMessagesInForm(String formClassName) {
         List<String> messages = ValidationMessage.getValidMessages(driver, formClassName);
-        assertTrue(messages.size() > 0);
         for (String message : messages) {
             assertEquals("All right", message);
         }
