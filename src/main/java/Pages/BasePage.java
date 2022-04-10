@@ -56,6 +56,8 @@ public abstract class BasePage {
     private WebElement ageRegisterInput;
     @FindBy(xpath = "//button[text()='Sign up']")
     private WebElement signUpButton;
+    @FindBy(xpath = "//nav//a[text()='My blog']")
+    private WebElement blogButton;
 
     public BasePage clickOnSignIn() {
         signInButton.click();
@@ -154,6 +156,12 @@ public abstract class BasePage {
         profileButton.click();
         pause(2000);
         return new ProfilePage(driver);
+    }
+
+    public BlogPage goToBlogPage() {
+        blogButton.click();
+        pause(2000);
+        return new BlogPage(driver);
     }
 
     public BasePage checkConsentMessage(String formName) {
