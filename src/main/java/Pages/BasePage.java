@@ -150,10 +150,10 @@ public abstract class BasePage {
         return this;
     }
 
-    public BasePage goToProfilePage() {
+    public ProfilePage goToProfilePage() {
         profileButton.click();
         pause(2000);
-        return this;
+        return new ProfilePage(driver);
     }
 
     public BasePage checkConsentMessage(String formName) {

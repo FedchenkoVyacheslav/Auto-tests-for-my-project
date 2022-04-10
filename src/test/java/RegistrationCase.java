@@ -37,6 +37,7 @@ public class RegistrationCase {
                 .clickOnSignIn()
                 .loginWithCredential(EMAIL, PASSWORD)
                 .goToProfilePage()
+                .confirmSavedValues(NAME, SURNAME, EMAIL, LOCATION, AGE)
                 .checkUrlIsValid(URL + "pages/profile/")
                 .clickOnSignOut()
                 .checkUrlIsValid(URL);
