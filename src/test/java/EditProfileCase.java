@@ -23,6 +23,7 @@ public class EditProfileCase {
     private final String NEW_PASSWORD = "87654321";
     private final String NEW_LOCATION = "Zion";
     private final String NEW_AGE = "36";
+    private final String PATH = "src/test/resources/testData/neo_matrix.jpg";
     MainPage myMainPage;
 
     @Before
@@ -49,6 +50,23 @@ public class EditProfileCase {
                 .loginWithCredential(EMAIL, NEW_PASSWORD)
                 .goToProfilePage()
                 .checkUrlIsValid(URL + "pages/profile/");
+    }
+
+    @Test
+    public void editData(){
+        myMainPage
+                .clickOnRegister()
+                .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
+                .clickOnSignIn()
+                .loginWithCredential(EMAIL, PASSWORD)
+                .goToProfilePage()
+                .clickOnChangeDataButton()
+                .changeData(NEW_EMAIL, NEW_NAME, NEW_SURNAME, NEW_LOCATION, NEW_AGE, PATH)
+                .clickOnSignOut()
+                .clickOnSignIn()
+                .loginWithCredential(NEW_EMAIL, PASSWORD)
+                .goToProfilePage()
+                .confirmSavedValues(NEW_NAME, NEW_SURNAME, NEW_EMAIL, NEW_LOCATION, NEW_AGE);
     }
 
     @Test
