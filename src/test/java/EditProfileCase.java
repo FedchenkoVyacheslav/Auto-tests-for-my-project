@@ -51,6 +51,34 @@ public class EditProfileCase {
                 .checkUrlIsValid(URL + "pages/profile/");
     }
 
+    @Test
+    public void checkValidationErrorsOnEditPassword(){
+        myMainPage
+                .clickOnRegister()
+                .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
+                .clickOnSignIn()
+                .loginWithCredential(EMAIL, PASSWORD)
+                .goToProfilePage()
+                .clickOnChangePasswordButton()
+
+                .checkInputErrorInChangePasswordForm("This field is required")
+                .typeOldPassword(PASSWORD)
+
+                .checkInputErrorInChangePasswordForm("This field is required")
+                .typeNewPassword("1")
+                .checkInputErrorInChangePasswordForm("Password must be between 3 and 20 characters")
+                .typeNewPassword("1234567890asdfghjklzx")
+                .checkInputErrorInChangePasswordForm("Password must be between 3 and 20 characters")
+                .typeNewPassword(PASSWORD)
+                .checkInputErrorInChangePasswordForm("The new password cannot be the same as the old")
+                .typeNewPassword(NEW_PASSWORD)
+
+                .checkInputErrorInChangePasswordForm("This field is required")
+                .typeNewPasswordRepeat("1")
+                .checkInputErrorInChangePasswordForm("New password mismatch")
+                .typeNewPasswordRepeat(NEW_PASSWORD);
+    }
+
     @After
     public void quit(){
         driver.quit();

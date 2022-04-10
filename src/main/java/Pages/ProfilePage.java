@@ -96,4 +96,11 @@ public class ProfilePage extends BasePage{
         pause(2000);
         return this;
     }
+
+    public ProfilePage checkInputErrorInChangePasswordForm(String message) {
+        clickOnChangePasswordModalButton();
+        checkInvalidMessage("form-password-edit", message);
+        clearInvalidInput("form-password-edit", "input");
+        return this;
+    }
 }
