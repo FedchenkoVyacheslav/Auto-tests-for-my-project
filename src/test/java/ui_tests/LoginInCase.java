@@ -5,6 +5,7 @@ import Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,7 @@ public class LoginInCase {
     }
 
     @Test
+    @DisplayName("Should login user")
     public void loginLogoutToProfile(){
         myMainPage
                 .clickOnSignIn()
@@ -38,6 +40,7 @@ public class LoginInCase {
     }
 
     @Test
+    @DisplayName("Should check validation errors in login popup")
     public void checkValidationErrorsOnLogin(){
         myMainPage
                 .clickOnSignIn()

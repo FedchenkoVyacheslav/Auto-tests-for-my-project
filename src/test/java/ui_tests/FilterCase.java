@@ -5,6 +5,7 @@ import Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,7 @@ public class FilterCase {
     }
 
     @Test
+    @DisplayName("Should group posts by selected tags")
     public void searchGroupByTags(){
         myMainPage
                 .goToBlogPage()
@@ -35,6 +37,7 @@ public class FilterCase {
     }
 
     @Test
+    @DisplayName("Should group posts by number of views")
     public void searchGroupByViews(){
         myMainPage
                 .goToBlogPage()
@@ -52,6 +55,7 @@ public class FilterCase {
     }
 
     @Test
+    @DisplayName("Should group posts by number of comments")
     public void searchGroupByComments(){
         myMainPage
                 .goToBlogPage()
@@ -73,6 +77,7 @@ public class FilterCase {
     }
 
     @Test
+    @DisplayName("Should get posts by partial match with search query")
     public void searchGroupByPartialWordsMatch(){
         myMainPage
                 .goToBlogPage()
@@ -84,6 +89,7 @@ public class FilterCase {
     }
 
     @Test
+    @DisplayName("Should change number of posts displayed on page")
     public void showNumberOfResultsPerPage(){
         myMainPage
                 .goToBlogPage()
@@ -98,6 +104,7 @@ public class FilterCase {
     }
 
     @Test
+    @DisplayName("Should clear search filter")
     public void checkResetSearchFilter(){
         myMainPage
                 .goToBlogPage()

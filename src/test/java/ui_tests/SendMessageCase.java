@@ -6,6 +6,7 @@ import Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -31,6 +32,7 @@ public class SendMessageCase {
     }
 
     @Test
+    @DisplayName("Should send new message")
     public void sendMessage(){
         myMainPage
                 .clickOnSendMessage()
@@ -39,6 +41,7 @@ public class SendMessageCase {
     }
 
     @Test
+    @DisplayName("Should check validation errors in send message popup")
     public void checkValidationErrors(){
         myMainPage
                 .clickOnSendMessage()

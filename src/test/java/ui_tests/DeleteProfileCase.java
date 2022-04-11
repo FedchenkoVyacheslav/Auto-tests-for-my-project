@@ -6,6 +6,7 @@ import Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -31,6 +32,7 @@ public class DeleteProfileCase {
     }
 
     @Test
+    @DisplayName("Should delete user")
     public void deleteProfile(){
         myMainPage
                 .clickOnRegister()

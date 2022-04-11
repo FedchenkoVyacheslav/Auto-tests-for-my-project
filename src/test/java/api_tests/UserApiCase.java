@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 
 import static io.restassured.RestAssured.given;
 
@@ -13,7 +14,8 @@ public class UserApiCase {
     private final String BASE_URL = "https://academy.directlinedev.com/api";
 
     @Test
-    public void createUser() {
+    @DisplayName("Should create new user")
+    public void shouldCreateUserCase() {
         String requestBody = String.format("{\n" +
                 "  \"email\": \"%s\",\n" +
                 "  \"location\": \"New York\",\n" +
@@ -41,7 +43,8 @@ public class UserApiCase {
     }
 
     @Test
-    public void getUser() {
+    @DisplayName("Should get user")
+    public void shouldGetUserCase() {
         Response response = given()
                 .baseUri(BASE_URL)
                 .basePath("/users/{id}")
@@ -62,7 +65,8 @@ public class UserApiCase {
     }
 
     @Test
-    public void loginUser() {
+    @DisplayName("Should login user")
+    public void shouldLoginUserCase() {
         String requestBody = "{\n" +
                 "  \"email\": \"g1@gmail.com\",\n" +
                 "  \"password\": \"12345678\"}";
@@ -82,7 +86,8 @@ public class UserApiCase {
     }
 
     @Test
-    public void updateUser() {
+    @DisplayName("Should update user data")
+    public void shouldUpdateUserCase() {
         String requestBodyLogin = "{\n" +
                 "  \"email\": \"g1@gmail.com\",\n" +
                 "  \"password\": \"12345678\"}";
@@ -132,7 +137,8 @@ public class UserApiCase {
     }
 
     @Test
-    public void deleteUser() {
+    @DisplayName("Should delete user")
+    public void shouldDeleteUserCase() {
         String requestBody = String.format("{\n" +
                 "  \"email\": \"%s\",\n" +
                 "  \"location\": \"New York\",\n" +

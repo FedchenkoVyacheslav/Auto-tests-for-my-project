@@ -6,6 +6,7 @@ import Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,7 @@ public class EditProfileCase {
     }
 
     @Test
+    @DisplayName("Should change password")
     public void editPassword(){
         myMainPage
                 .clickOnRegister()
@@ -58,6 +60,7 @@ public class EditProfileCase {
     }
 
     @Test
+    @DisplayName("Should update user data")
     public void editData(){
         myMainPage
                 .clickOnRegister()
@@ -76,6 +79,7 @@ public class EditProfileCase {
     }
 
     @Test
+    @DisplayName("Should check validation errors in edit password popup")
     public void checkValidationErrorsOnEditPassword(){
         myMainPage
                 .clickOnRegister()
@@ -104,6 +108,7 @@ public class EditProfileCase {
     }
 
     @Test
+    @DisplayName("Should check validation errors in edit data popup")
     public void checkValidationErrorsOnEditData() {
         myMainPage
                 .clickOnRegister()

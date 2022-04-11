@@ -6,6 +6,7 @@ import Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -32,6 +33,7 @@ public class RegistrationCase {
     }
 
     @Test
+    @DisplayName("Should register new user")
     public void registerNewUser(){
         myMainPage
                 .clickOnRegister()
@@ -47,6 +49,7 @@ public class RegistrationCase {
     }
 
     @Test
+    @DisplayName("Should check validation errors in registration popup")
     public void checkValidationErrorsOnRegister(){
         myMainPage
                 .clickOnRegister()
