@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 public class RestTest {
     private String EMAIL = BasePage.getRandomLogin();
@@ -62,5 +61,23 @@ public class RestTest {
         Assertions.assertEquals(30, response.jsonPath().getInt("data.age"));
     }
 
+    @Test
+    public void loginUser() {
+        String requestBody = "{\n" +
+                "  \"email\": \"t1@gmail.com\",\n" +
+                "  \"password\": \"87654321\"}";
 
+        Response response = given()
+                .baseUri(BASE_URL)
+                .basePath("/users/login")
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when().post()
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(246, response.jsonPath().getInt("data.userId"));
+        Assertions.assertNotNull(response.jsonPath().getString("data.token"));
+    }
 }
