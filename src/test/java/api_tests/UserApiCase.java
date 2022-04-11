@@ -155,6 +155,27 @@ public class UserApiCase {
     }
 
     @Test
+    @DisplayName("Shouldn't login user with invalid email")
+    public void shouldLoginUserWithInvalidEmailCase() {
+        String requestBody = "{\n" +
+                "  \"email\": \"11111\",\n" +
+                "  \"password\": \"12345678\"}";
+
+        Response response = given()
+                .baseUri(BASE_URL)
+                .basePath("/users/login")
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when().post()
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(422, response.statusCode());
+        Assertions.assertFalse(response.jsonPath().getBoolean("success"));
+        Assertions.assertEquals("Не верный формат почты!", response.jsonPath().getString("errors.email"));
+    }
+
+    @Test
     @DisplayName("Should update user data")
     public void shouldUpdateUserCase() {
         String requestBodyLogin = "{\n" +
