@@ -257,4 +257,21 @@ public class UserApiCase {
         Assertions.assertTrue(responseDelete.jsonPath().getBoolean("success"));
         Assertions.assertEquals("Ок!", responseDelete.jsonPath().getString("data"));
     }
+
+    @Test
+    @DisplayName("Shouldn't delete not authorised user")
+    public void shouldNotDeleteNotAuthorisedUserCase() {
+        Response response = given()
+                .baseUri(BASE_URL)
+                .basePath("/users/{id}")
+                .pathParam("id", 1)
+                .contentType(ContentType.JSON)
+                .delete()
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(401, response.statusCode());
+        Assertions.assertFalse(response.jsonPath().getBoolean("success"));
+        Assertions.assertEquals("Вы не авторизированны!5", response.jsonPath().getString("_message"));
+    }
 }
