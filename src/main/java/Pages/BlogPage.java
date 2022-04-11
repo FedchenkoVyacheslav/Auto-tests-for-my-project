@@ -70,7 +70,7 @@ public class BlogPage extends BasePage {
         return this;
     }
 
-    public BlogPage checkTags(int tagNumbers[]) {
+    public BlogPage checkTags(int[] tagNumbers) {
         for (int tagNumber : tagNumbers) {
             driver.findElement(By.xpath("//div[@class='filter__tag-box']//input[@aria-label='tag " + tagNumber + "']/..")).click();
         }
@@ -82,12 +82,35 @@ public class BlogPage extends BasePage {
         return this;
     }
 
-    public BlogPage checkBlogTag(int tagNumber) {
+    public BlogPage checkTagInBlog(int tagNumber) {
         List<WebElement> blogTags = driver.findElements(By.xpath("//li[contains(@class, 'blog__tag')]"));
         for (WebElement blogTag : blogTags) {
             assertEquals(tagNumber, parseInt(blogTag.getAttribute("ariaLabel").replaceAll("\\D+","")));
         }
         return this;
+    }
+
+    public BlogPage checkCommentsCount(String comments) {
+        List<WebElement> commentBlocks = driver.findElements(By.xpath("//input[@name='commentsCount']/.."));
+        switch (comments) {
+            case "0":
+                for (int i=0; i<commentBlocks.size(); i++) {
+                    commentBlocks.get(0).click();
+                }
+                return this;
+            case "0-1":
+                for (int i=0; i<commentBlocks.size(); i++) {
+                    commentBlocks.get(1).click();
+                }
+                return this;
+            case "1-50":
+                for (int i=0; i<commentBlocks.size(); i++) {
+                    commentBlocks.get(2).click();
+                }
+                return this;
+            default:
+                throw new IllegalStateException("Unexpected value: " + comments);
+        }
     }
 
     public BlogPage checkNumberOfViewsInBlogs(String number) {
@@ -115,6 +138,36 @@ public class BlogPage extends BasePage {
                 for(Integer view : numbersOfViews) {
                     assertTrue(1000 < view);
                     assertTrue(2000 > view);
+                }
+                return this;
+            default:
+                throw new IllegalStateException("Unexpected value: " + number);
+        }
+    }
+
+    public BlogPage checkNumberOfCommentsInBlogs(String number) {
+        List<Integer> numbersOfComments = new ArrayList<Integer>();
+        List<WebElement> blogElements = driver.findElements(By.xpath("//li[@class='blog__item']//span[contains(@class, 'blog__comments')]"));
+        for (WebElement blogElement : blogElements) {
+            int numberOfComments = parseInt(blogElement.getText().replaceAll("\\D+",""));
+            numbersOfComments.add(numberOfComments);
+        }
+
+        switch (number) {
+            case "0":
+                for(Integer comment : numbersOfComments) {
+                    assertTrue(0 == comment);
+                }
+                return this;
+            case "0-1":
+                for(Integer comment : numbersOfComments) {
+                    assertTrue(1 >= comment);
+                }
+                return this;
+            case "1-50":
+                for(Integer comment : numbersOfComments) {
+                    assertTrue(1 < comment);
+                    assertTrue(50 > comment);
                 }
                 return this;
             default:

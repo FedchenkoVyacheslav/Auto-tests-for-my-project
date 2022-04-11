@@ -23,17 +23,17 @@ public class FilterCase {
     }
 
     @Test
-    public void tagsSearch(){
+    public void searchGroupByTags(){
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
                 .checkTag(7)
                 .clickOnSearch()
-                .checkBlogTag(7);
+                .checkTagInBlog(7);
     }
 
     @Test
-    public void viewsSearch(){
+    public void searchGroupByViews(){
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
@@ -50,12 +50,28 @@ public class FilterCase {
     }
 
     @Test
-    public void commentsSearch(){
-
+    public void searchGroupByComments(){
+        myMainPage
+                .goToBlogPage()
+                .clickOnReset()
+                .checkTags(ALL_TAGS)
+                .checkCommentsCount("0")
+                .clickOnSearch()
+                .checkNumberOfCommentsInBlogs("0")
+                .clickOnReset()
+                .checkTags(ALL_TAGS)
+                .checkCommentsCount("0-1")
+                .clickOnSearch()
+                .checkNumberOfCommentsInBlogs("0-1")
+                .clickOnReset()
+                .checkTags(ALL_TAGS)
+                .checkCommentsCount("1-50")
+                .clickOnSearch()
+                .checkNumberOfCommentsInBlogs("1-50");
     }
 
     @Test
-    public void partialTextSearch(){
+    public void searchGroupByPartialWordsMatch(){
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
@@ -66,7 +82,7 @@ public class FilterCase {
     }
 
     @Test
-    public void showByCheck(){
+    public void showNumberOfResultsPerPage(){
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
@@ -80,7 +96,7 @@ public class FilterCase {
     }
 
     @Test
-    public void resetSearch(){
+    public void checkResetSearchFilter(){
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
