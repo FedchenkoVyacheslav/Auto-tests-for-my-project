@@ -176,6 +176,27 @@ public class UserApiCase {
     }
 
     @Test
+    @DisplayName("Shouldn't login user with wrong combination of email and password")
+    public void shouldLoginUserWithWrongCombinationCase() {
+        String requestBody = "{\n" +
+                "  \"email\": \"g1@gmail.com\",\n" +
+                "  \"password\": \"1111111\"}";
+
+        Response response = given()
+                .baseUri(BASE_URL)
+                .basePath("/users/login")
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when().post()
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(400, response.statusCode());
+        Assertions.assertFalse(response.jsonPath().getBoolean("success"));
+        Assertions.assertEquals("Данная комбинация, почта и пароль не найдена!", response.jsonPath().getString("_message"));
+    }
+
+    @Test
     @DisplayName("Should update user data")
     public void shouldUpdateUserCase() {
         String requestBodyLogin = "{\n" +
