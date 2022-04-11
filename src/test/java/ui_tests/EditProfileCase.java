@@ -1,3 +1,5 @@
+package ui_tests;
+
 import Actions.PrepareDriver;
 import Pages.BasePage;
 import Pages.MainPage;

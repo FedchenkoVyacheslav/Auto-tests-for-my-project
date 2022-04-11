@@ -1,3 +1,5 @@
+package ui_tests;
+
 import Actions.PrepareDriver;
 import Pages.MainPage;
 import org.junit.After;

@@ -1,17 +1,24 @@
+package ui_tests;
+
 import Actions.PrepareDriver;
+import Pages.BasePage;
 import Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+
 import java.util.concurrent.TimeUnit;
 
-public class LoginInCase {
+public class DeleteProfileCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String EMAIL = "t1@gmail.com";
+    private String EMAIL = BasePage.getRandomLogin();
+    private final String NAME = "Tom";
+    private final String SURNAME = "Anderson";
     private final String PASSWORD = "12345678";
-    private final String SIGN_IN = "form-sing-in";
+    private final String LOCATION = "New York City";
+    private final String AGE = "35";
     MainPage myMainPage;
 
     @Before
@@ -24,26 +31,19 @@ public class LoginInCase {
     }
 
     @Test
-    public void loginLogoutToProfile(){
+    public void deleteProfile(){
         myMainPage
+                .clickOnRegister()
+                .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
                 .clickOnSignIn()
                 .loginWithCredential(EMAIL, PASSWORD)
-                .checkValidMessagesInForm(SIGN_IN)
                 .goToProfilePage()
-                .checkUrlIsValid(URL + "pages/profile/")
-                .clickOnSignOut()
-                .checkUrlIsValid(URL);
-    }
-
-    @Test
-    public void checkValidationErrorsOnLogin(){
-        myMainPage
+                .clickOnDeleteAccountButton()
+                .clickOnDeleteAccountModalButton()
+                .checkUrlIsValid(URL)
                 .clickOnSignIn()
-                .checkErrorInLoginForm("This field is required")
-                .typeEmail("1")
-                .checkErrorInLoginForm("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
-                .typeEmail("test@mail.com")
-                .typePassword("1")
+                .typeEmail(EMAIL)
+                .typePassword(PASSWORD)
                 .checkErrorInLoginForm("This combination, mail and password were not found!");
     }
 
