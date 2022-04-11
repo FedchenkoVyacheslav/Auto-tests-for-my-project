@@ -2,13 +2,16 @@ package api_tests;
 
 import Pages.BasePage;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class RestTest {
     private String EMAIL = BasePage.getRandomLogin();
+    private final String BASE_URL = "https://academy.directlinedev.com/api";
 
     @Test
     public void createUser() {
@@ -20,26 +23,44 @@ public class RestTest {
                 "  \"password\": \"12345678\",\n" +
                 "  \"age\": 21 \n}", EMAIL);
 
-        given()
-                .baseUri("https://academy.directlinedev.com/api")
+        Response response = given()
+                .baseUri(BASE_URL)
                 .basePath("/users")
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when().post()
-                .then().statusCode(200)
-                .extract().response().prettyPrint();
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(EMAIL, response.jsonPath().getString("data.email"));
+        Assertions.assertEquals("New York", response.jsonPath().getString("data.location"));
+        Assertions.assertEquals("Anderson", response.jsonPath().getString("data.surname"));
+        Assertions.assertEquals("Tom", response.jsonPath().getString("data.name"));
+        Assertions.assertEquals("12345678", response.jsonPath().getString("data.password"));
+        Assertions.assertEquals(21, response.jsonPath().getInt("data.age"));
     }
 
     @Test
     public void getUser() {
-        given()
-                .baseUri("https://academy.directlinedev.com/api")
+        Response response = given()
+                .baseUri(BASE_URL)
                 .basePath("/users/{id}")
-                .pathParam("id", "273")
+                .pathParam("id", "246")
                 .contentType(ContentType.JSON)
                 .when().get()
-                .then().statusCode(200)
-                .body("data.email", equalTo("email1@email.com"))
-                .extract().response().prettyPrint();
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(246, response.jsonPath().getInt("data.id"));
+        Assertions.assertEquals("t1@gmail.com", response.jsonPath().getString("data.email"));
+        Assertions.assertEquals("Test", response.jsonPath().getString("data.location"));
+        Assertions.assertEquals("Anderson", response.jsonPath().getString("data.surname"));
+        Assertions.assertEquals("Tom", response.jsonPath().getString("data.name"));
+        Assertions.assertEquals("87654321", response.jsonPath().getString("data.password"));
+        Assertions.assertEquals(30, response.jsonPath().getInt("data.age"));
     }
+
+
 }
