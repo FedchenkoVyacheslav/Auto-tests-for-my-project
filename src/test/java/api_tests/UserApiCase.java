@@ -121,4 +121,54 @@ public class UserApiCase {
                     .extract().response().prettyPrint();
         }
     }
+
+    @Test
+    public void deleteUser() {
+        String requestBody = String.format("{\n" +
+                "  \"email\": \"%s\",\n" +
+                "  \"location\": \"New York\",\n" +
+                "  \"surname\": \"Anderson\",\n" +
+                "  \"name\": \"Tom\",\n" +
+                "  \"password\": \"12345678\",\n" +
+                "  \"age\": 21 \n}", EMAIL);
+
+        Response responseCreate = given()
+                .baseUri(BASE_URL)
+                .basePath("/users")
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when().post()
+                .then()
+                .extract().response();
+
+        String newUserEmail = responseCreate.jsonPath().getString("data.email");
+
+        String requestBodyLogin = String.format("{\n" +
+                "  \"email\": \"%s\",\n" +
+                "  \"password\": \"12345678\"}", newUserEmail);
+
+        Response responseLogin = given()
+                .baseUri(BASE_URL)
+                .basePath("/users/login")
+                .contentType(ContentType.JSON)
+                .body(requestBodyLogin)
+                .when().post()
+                .then()
+                .extract().response();
+
+        String accessToken = responseLogin.jsonPath().getString("data.token");
+        String id = responseLogin.jsonPath().getString("data.userId");
+
+        Response response = given()
+                .baseUri(BASE_URL)
+                .basePath("/users/{id}")
+                .pathParam("id", id)
+                .contentType(ContentType.JSON)
+                .header("x-access-token", accessToken)
+                .delete()
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(200, response.statusCode());
+    }
 }
