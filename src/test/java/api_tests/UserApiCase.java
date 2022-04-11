@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Assertions;
 
 import static io.restassured.RestAssured.given;
 
-public class RestTest {
+public class UserApiCase {
     private String EMAIL = BasePage.getRandomLogin();
     private final String BASE_URL = "https://academy.directlinedev.com/api";
 
@@ -53,19 +53,19 @@ public class RestTest {
 
         Assertions.assertEquals(200, response.statusCode());
         Assertions.assertEquals(246, response.jsonPath().getInt("data.id"));
-        Assertions.assertEquals("t1@gmail.com", response.jsonPath().getString("data.email"));
-        Assertions.assertEquals("Test", response.jsonPath().getString("data.location"));
-        Assertions.assertEquals("Anderson", response.jsonPath().getString("data.surname"));
-        Assertions.assertEquals("Tom", response.jsonPath().getString("data.name"));
-        Assertions.assertEquals("87654321", response.jsonPath().getString("data.password"));
+        Assertions.assertEquals("g1@gmail.com", response.jsonPath().getString("data.email"));
+        Assertions.assertEquals("Los Angeles", response.jsonPath().getString("data.location"));
+        Assertions.assertEquals("Smith", response.jsonPath().getString("data.surname"));
+        Assertions.assertEquals("Will", response.jsonPath().getString("data.name"));
+        Assertions.assertEquals("12345678", response.jsonPath().getString("data.password"));
         Assertions.assertEquals(30, response.jsonPath().getInt("data.age"));
     }
 
     @Test
     public void loginUser() {
         String requestBody = "{\n" +
-                "  \"email\": \"t1@gmail.com\",\n" +
-                "  \"password\": \"87654321\"}";
+                "  \"email\": \"g1@gmail.com\",\n" +
+                "  \"password\": \"12345678\"}";
 
         Response response = given()
                 .baseUri(BASE_URL)
@@ -79,5 +79,46 @@ public class RestTest {
         Assertions.assertEquals(200, response.statusCode());
         Assertions.assertEquals(246, response.jsonPath().getInt("data.userId"));
         Assertions.assertNotNull(response.jsonPath().getString("data.token"));
+    }
+
+    @Test
+    public void updateUser() {
+        String requestBodyLogin = "{\n" +
+                "  \"email\": \"g1@gmail.com\",\n" +
+                "  \"password\": \"12345678\"}";
+
+        Response responseLogin = given()
+                .baseUri(BASE_URL)
+                .basePath("/users/login")
+                .contentType(ContentType.JSON)
+                .body(requestBodyLogin)
+                .when().post()
+                .then()
+                .extract().response();
+
+        String accessToken = responseLogin.jsonPath().getString("data.token");
+
+        String requestBodyUpdate = "{\n" +
+                "  \"email\": \"g1@gmail.com\",\n" +
+                "  \"location\": \"Los Angeles\",\n" +
+                "  \"surname\": \"Smith\",\n" +
+                "  \"name\": \"Will\",\n" +
+                "  \"newPassword\": \"12345678\",\n" +
+                "  \"oldPassword\": \"12345678\",\n" +
+                "  \"age\": 30,\n" +
+                "  \"avatar\": \"\" \n}";
+
+        {
+
+            given()
+                    .baseUri(BASE_URL)
+                    .basePath("/users")
+                    .contentType(ContentType.JSON)
+                    .header("x-access-token", accessToken)
+                    .body(requestBodyUpdate)
+                    .when().put()
+                    .then().statusCode(200)
+                    .extract().response().prettyPrint();
+        }
     }
 }
