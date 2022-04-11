@@ -32,6 +32,8 @@ public class BlogPage extends BasePage {
     private WebElement radioButton500_1000views;
     @FindBy(xpath = "//fieldset[contains(@class, 'filter__views')]//span[text()='1000-2000']/..")
     private WebElement radioButton1000_2000views;
+    @FindBy(xpath = "//input[@id='filter-search']")
+    private WebElement searchInput;
 
     public BlogPage showNumberOfBlogs(String number) {
         switch (number) {
@@ -90,34 +92,43 @@ public class BlogPage extends BasePage {
 
     public BlogPage checkNumberOfViewsInBlogs(String number) {
         List<Integer> numbersOfViews = new ArrayList<Integer>();
-        List<WebElement> blogViews = driver.findElements(By.xpath("//li[@class='blog__item']//span[contains(@class, 'blog__views')]"));
-        for (WebElement blogView : blogViews) {
-            int numberOfViews = parseInt(blogView.getText().replaceAll("\\D+",""));
+        List<WebElement> blogElements = driver.findElements(By.xpath("//li[@class='blog__item']//span[contains(@class, 'blog__views')]"));
+        for (WebElement blogElement : blogElements) {
+            int numberOfViews = parseInt(blogElement.getText().replaceAll("\\D+",""));
             numbersOfViews.add(numberOfViews);
         }
 
         switch (number) {
             case "100-500":
-                for(Integer views : numbersOfViews) {
-                    assertTrue(100 < views);
-                    assertTrue(500 > views);
+                for(Integer view : numbersOfViews) {
+                    assertTrue(100 < view);
+                    assertTrue(500 > view);
                 }
                 return this;
             case "500-1000":
-                for(Integer views : numbersOfViews) {
-                    assertTrue(500 < views);
-                    assertTrue(1000 > views);
+                for(Integer view : numbersOfViews) {
+                    assertTrue(500 < view);
+                    assertTrue(1000 > view);
                 }
                 return this;
             case "1000-2000":
-                for(Integer views : numbersOfViews) {
-                    assertTrue(1000 < views);
-                    assertTrue(2000 > views);
+                for(Integer view : numbersOfViews) {
+                    assertTrue(1000 < view);
+                    assertTrue(2000 > view);
                 }
                 return this;
             default:
                 throw new IllegalStateException("Unexpected value: " + number);
         }
+    }
+
+    public BlogPage checkPartialSearchMatch(String searchQuery) {
+        List<WebElement> blogTitleElements = driver.findElements(By.xpath("//li[@class='blog__item']//h2[@class='blog__title']"));
+        for (WebElement blogTitleElement : blogTitleElements) {
+            String title = blogTitleElement.getText();
+            assertTrue(title.toLowerCase().contains(searchQuery.toLowerCase()));
+        }
+        return this;
     }
 
     public BlogPage clickOnReset() {
@@ -127,6 +138,11 @@ public class BlogPage extends BasePage {
 
     public BlogPage clickOnSearch() {
         searchButton.click();
+        return this;
+    }
+
+    public BlogPage typeSearchQuery(String searchQuery) {
+        searchInput.sendKeys(searchQuery);
         return this;
     }
 

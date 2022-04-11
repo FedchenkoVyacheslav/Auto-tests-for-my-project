@@ -56,7 +56,13 @@ public class FilterCase {
 
     @Test
     public void partialTextSearch(){
-
+        myMainPage
+                .goToBlogPage()
+                .clickOnReset()
+                .checkTags(ALL_TAGS)
+                .typeSearchQuery("and")
+                .clickOnSearch()
+                .checkPartialSearchMatch("and");
     }
 
     @Test
