@@ -68,6 +68,50 @@ public class UserApiCase {
     }
 
     @Test
+    @DisplayName("Shouldn't create new user with already exist email")
+    public void shouldNotCreateUserWithExistEmailCase() {
+        String requestBodyCreate = String.format("{\n" +
+                "  \"email\": \"%s\",\n" +
+                "  \"location\": \"New York\",\n" +
+                "  \"surname\": \"Anderson\",\n" +
+                "  \"name\": \"Tom\",\n" +
+                "  \"password\": \"12345678\",\n" +
+                "  \"age\": 21 \n}", EMAIL);
+
+        Response responseCreate = given()
+                .baseUri(BASE_URL)
+                .basePath("/users")
+                .contentType(ContentType.JSON)
+                .body(requestBodyCreate)
+                .when().post()
+                .then()
+                .extract().response();
+
+        String newUserEmail = responseCreate.jsonPath().getString("data.email");
+
+        String requestBody = String.format("{\n" +
+                "  \"email\": \"%s\",\n" +
+                "  \"location\": \"New York\",\n" +
+                "  \"surname\": \"Anderson\",\n" +
+                "  \"name\": \"Tom\",\n" +
+                "  \"password\": \"12345678\",\n" +
+                "  \"age\": 21 \n}", newUserEmail);
+
+        Response response = given()
+                .baseUri(BASE_URL)
+                .basePath("/users")
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when().post()
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(422, response.statusCode());
+        Assertions.assertFalse(response.jsonPath().getBoolean("success"));
+        Assertions.assertEquals("Данный email уже занят!", response.jsonPath().getString("errors.email"));
+    }
+
+    @Test
     @DisplayName("Should get user")
     public void shouldGetUserCase() {
         Response response = given()
