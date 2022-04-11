@@ -181,7 +181,6 @@ public class UserApiCase {
                 "  \"oldPassword\": \"12345678\",\n" +
                 "  \"age\": 30,\n" +
                 "  \"avatar\": \"\" \n}";
-
         {
 
             Response responseUpdate = given()
@@ -191,7 +190,7 @@ public class UserApiCase {
                     .header("x-access-token", accessToken)
                     .body(requestBodyUpdate)
                     .when().put()
-                    .then().statusCode(200)
+                    .then()
                     .extract().response();
 
             Assertions.assertEquals(200, responseUpdate.statusCode());
@@ -202,6 +201,35 @@ public class UserApiCase {
             Assertions.assertEquals("Will", responseUpdate.jsonPath().getString("data.name"));
             Assertions.assertEquals("12345678", responseUpdate.jsonPath().getString("data.password"));
             Assertions.assertEquals(30, responseUpdate.jsonPath().getInt("data.age"));
+        }
+    }
+
+    @Test
+    @DisplayName("Shouldn't update not authorised user data")
+    public void shouldNotUpdateNotAuthorisedUserCase() {
+        String request = "{\n" +
+                "  \"email\": \"g1@gmail.com\",\n" +
+                "  \"location\": \"Los Angeles\",\n" +
+                "  \"surname\": \"Smith\",\n" +
+                "  \"name\": \"Will\",\n" +
+                "  \"newPassword\": \"12345678\",\n" +
+                "  \"oldPassword\": \"12345678\",\n" +
+                "  \"age\": 30,\n" +
+                "  \"avatar\": \"\" \n}";
+        {
+
+            Response response = given()
+                    .baseUri(BASE_URL)
+                    .basePath("/users")
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .when().put()
+                    .then()
+                    .extract().response();
+
+            Assertions.assertEquals(401, response.statusCode());
+            Assertions.assertFalse(response.jsonPath().getBoolean("success"));
+            Assertions.assertEquals("Вы не авторизированны!5", response.jsonPath().getString("_message"));
         }
     }
 
