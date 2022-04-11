@@ -110,7 +110,7 @@ public class UserApiCase {
 
         {
 
-            given()
+            Response responseUpdate = given()
                     .baseUri(BASE_URL)
                     .basePath("/users")
                     .contentType(ContentType.JSON)
@@ -118,7 +118,16 @@ public class UserApiCase {
                     .body(requestBodyUpdate)
                     .when().put()
                     .then().statusCode(200)
-                    .extract().response().prettyPrint();
+                    .extract().response();
+
+            Assertions.assertEquals(200, responseUpdate.statusCode());
+            Assertions.assertEquals(246, responseUpdate.jsonPath().getInt("data.id"));
+            Assertions.assertEquals("g1@gmail.com", responseUpdate.jsonPath().getString("data.email"));
+            Assertions.assertEquals("Los Angeles", responseUpdate.jsonPath().getString("data.location"));
+            Assertions.assertEquals("Smith", responseUpdate.jsonPath().getString("data.surname"));
+            Assertions.assertEquals("Will", responseUpdate.jsonPath().getString("data.name"));
+            Assertions.assertEquals("12345678", responseUpdate.jsonPath().getString("data.password"));
+            Assertions.assertEquals(30, responseUpdate.jsonPath().getInt("data.age"));
         }
     }
 
@@ -159,7 +168,7 @@ public class UserApiCase {
         String accessToken = responseLogin.jsonPath().getString("data.token");
         String id = responseLogin.jsonPath().getString("data.userId");
 
-        Response response = given()
+        Response responseDelete = given()
                 .baseUri(BASE_URL)
                 .basePath("/users/{id}")
                 .pathParam("id", id)
@@ -169,6 +178,8 @@ public class UserApiCase {
                 .then()
                 .extract().response();
 
-        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(200, responseDelete.statusCode());
+        Assertions.assertTrue(responseDelete.jsonPath().getBoolean("success"));
+        Assertions.assertEquals("Ок!", responseDelete.jsonPath().getString("data"));
     }
 }
