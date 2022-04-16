@@ -1,8 +1,8 @@
 package ui_tests;
 
-import Actions.PrepareDriver;
-import Pages.BasePage;
-import Pages.MainPage;
+import selenium.Actions.PrepareDriver;
+import selenium.Pages.BasePage;
+import selenium.Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

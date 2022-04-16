@@ -1,6 +1,6 @@
-package api_tests;
+package api_tests.oldStructure;
 
-import Pages.BasePage;
+import selenium.Pages.BasePage;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;

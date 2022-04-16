@@ -1,7 +1,7 @@
-package Pages;
+package selenium.Pages;
 
-import Elements.Checkbox;
-import Elements.ValidationMessage;
+import selenium.Elements.Checkbox;
+import selenium.Elements.ValidationMessage;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
