@@ -58,11 +58,11 @@ public class UserApiCase {
                 .then().statusCode(200)
                 .extract().jsonPath().getObject("data", CreateUserResponse.class);
 
-        assertThat(rs).extracting(CreateUserResponse::getEmail).isEqualTo(EMAIL);
-        assertThat(rs).extracting(CreateUserResponse::getLocation).isEqualTo("New York");
-        assertThat(rs).extracting(CreateUserResponse::getSurname).isEqualTo("Anderson");
-        assertThat(rs).extracting(CreateUserResponse::getName).isEqualTo("Tom");
-        assertThat(rs).extracting(CreateUserResponse::getPassword).isEqualTo("12345678");
-        assertThat(rs).extracting(CreateUserResponse::getAge).isEqualTo(21);
+        assertThat(rs).extracting(CreateUserResponse::getEmail).isEqualTo(rq.getEmail());
+        assertThat(rs).extracting(CreateUserResponse::getLocation).isEqualTo(rq.getLocation());
+        assertThat(rs).extracting(CreateUserResponse::getSurname).isEqualTo(rq.getSurname());
+        assertThat(rs).extracting(CreateUserResponse::getName).isEqualTo(rq.getName());
+        assertThat(rs).extracting(CreateUserResponse::getPassword).isEqualTo(rq.getPassword());
+        assertThat(rs).extracting(CreateUserResponse::getAge).isEqualTo(rq.getAge());
     }
 }
