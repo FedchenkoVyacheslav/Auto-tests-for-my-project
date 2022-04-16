@@ -5,9 +5,9 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import pojos.CreateUserRequest;
-import pojos.CreateUserResponse;
-import pojos.UserPojo;
+import api.pojos.CreateUserRequest;
+import api.pojos.CreateUserResponse;
+import api.pojos.UserPojo;
 import selenium.Pages.BasePage;
 
 import static io.restassured.RestAssured.given;
