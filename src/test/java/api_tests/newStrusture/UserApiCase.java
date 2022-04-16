@@ -10,6 +10,7 @@ import api.pojos.CreateUserResponse;
 import api.pojos.UserPojo;
 import selenium.Pages.BasePage;
 
+import static api.steps.UserSteps.getUser;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
@@ -27,14 +28,8 @@ public class UserApiCase {
 
     @Test
     @DisplayName("Should get user")
-    public void getUser() {
-        UserPojo user = given()
-                .spec(REQ_SPEC)
-                .basePath("/users/{id}")
-                .pathParam("id", USER_ID)
-                .when().get()
-                .then().statusCode(200)
-                .extract().jsonPath().getObject("data", UserPojo.class);
+    public void getUserCase() {
+        UserPojo user = getUser(USER_ID);
 
         assertThat(user).extracting(UserPojo::getId).isEqualTo(246);
         assertThat(user).extracting(UserPojo::getEmail).isEqualTo("g1@gmail.com");
@@ -47,7 +42,7 @@ public class UserApiCase {
 
     @Test
     @DisplayName("Should create new user")
-    public void createUser() {
+    public void createUserCase() {
         CreateUserRequest rq = new CreateUserRequest();
         rq.setEmail(EMAIL);
         rq.setLocation("New York");
