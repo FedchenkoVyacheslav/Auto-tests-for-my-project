@@ -22,9 +22,9 @@ public class UserApiCase {
 
     private final RequestSpecification REQ_SPEC =
             new RequestSpecBuilder()
-            .setBaseUri(BASE_URL)
-            .setContentType(ContentType.JSON)
-            .build();
+                    .setBaseUri(BASE_URL)
+                    .setContentType(ContentType.JSON)
+                    .build();
 
     @Test
     @DisplayName("Should get user")
@@ -43,13 +43,14 @@ public class UserApiCase {
     @Test
     @DisplayName("Should create new user")
     public void createUserCase() {
-        CreateUserRequest rq = new CreateUserRequest();
-        rq.setEmail(EMAIL);
-        rq.setLocation("New York");
-        rq.setSurname("Anderson");
-        rq.setName("Tom");
-        rq.setPassword("12345678");
-        rq.setAge(21);
+        CreateUserRequest rq = CreateUserRequest.builder()
+                .email(EMAIL)
+                .location("New York")
+                .surname("Anderson")
+                .name("Tom")
+                .password("12345678")
+                .age(21)
+                .build();
 
         CreateUserResponse rs = given()
                 .spec(REQ_SPEC)
