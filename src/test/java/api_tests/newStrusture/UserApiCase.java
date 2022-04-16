@@ -1,6 +1,8 @@
 package api_tests.newStrusture;
 
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import pojos.CreateUserRequest;
@@ -14,18 +16,23 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 public class UserApiCase {
     private String EMAIL = BasePage.getRandomLogin();
+    private final String USER_ID = "246";
     private final String BASE_URL = "https://academy.directlinedev.com/api";
+
+    private final RequestSpecification REQ_SPEC =
+            new RequestSpecBuilder()
+            .setBaseUri(BASE_URL)
+            .setContentType(ContentType.JSON)
+            .build();
 
     @Test
     @DisplayName("Should get user")
     public void getUser() {
         UserPojo user = given()
-                .baseUri(BASE_URL)
+                .spec(REQ_SPEC)
                 .basePath("/users/{id}")
-                .pathParam("id", "246")
-                .contentType(ContentType.JSON)
-                .when()
-                .get()
+                .pathParam("id", USER_ID)
+                .when().get()
                 .then().statusCode(200)
                 .extract().jsonPath().getObject("data", UserPojo.class);
 
@@ -50,9 +57,8 @@ public class UserApiCase {
         rq.setAge(21);
 
         CreateUserResponse rs = given()
-                .baseUri(BASE_URL)
+                .spec(REQ_SPEC)
                 .basePath("/users")
-                .contentType(ContentType.JSON)
                 .body(rq)
                 .when().post()
                 .then().statusCode(200)
