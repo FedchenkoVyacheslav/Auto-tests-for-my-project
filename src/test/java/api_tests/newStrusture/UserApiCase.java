@@ -1,5 +1,6 @@
 package api_tests.newStrusture;
 
+import api.steps.UserSteps;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -11,7 +12,6 @@ import api.pojos.UserPojo;
 import selenium.Pages.BasePage;
 
 import static api.steps.UserSteps.getUser;
-import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 
@@ -52,13 +52,8 @@ public class UserApiCase {
                 .age(21)
                 .build();
 
-        CreateUserResponse rs = given()
-                .spec(REQ_SPEC)
-                .basePath("/users")
-                .body(rq)
-                .when().post()
-                .then().statusCode(200)
-                .extract().jsonPath().getObject("data", CreateUserResponse.class);
+        UserSteps userApi = new UserSteps();
+        CreateUserResponse rs = userApi.createUser(rq);
 
         assertThat(rs).extracting(CreateUserResponse::getEmail).isEqualTo(rq.getEmail());
         assertThat(rs).extracting(CreateUserResponse::getLocation).isEqualTo(rq.getLocation());
