@@ -27,7 +27,7 @@ public class UserSteps {
         return user;
     }
 
-    public UserPojo getUser(){
+    public UserPojo getLastUser(){
         return given()
                 .spec(REQ_SPEC)
                 .basePath("/users/{id}")

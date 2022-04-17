@@ -1,30 +1,19 @@
 package api_tests.newStrusture;
 
 import api.steps.UserSteps;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
+import api.utils.UserGenerator;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import api.pojos.CreateUserRequest;
 import api.pojos.CreateUserResponse;
 import api.pojos.UserPojo;
-import selenium.Pages.BasePage;
 
 import static api.steps.UserSteps.getUser;
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 
 public class UserApiCase {
-    private String EMAIL = BasePage.getRandomLogin();
     private final String USER_ID = "246";
-    private final String BASE_URL = "https://academy.directlinedev.com/api";
-
-    private final RequestSpecification REQ_SPEC =
-            new RequestSpecBuilder()
-                    .setBaseUri(BASE_URL)
-                    .setContentType(ContentType.JSON)
-                    .build();
 
     @Test
     @DisplayName("Should get user")
@@ -43,14 +32,7 @@ public class UserApiCase {
     @Test
     @DisplayName("Should create new user")
     public void createUserCase() {
-        CreateUserRequest rq = CreateUserRequest.builder()
-                .email(EMAIL)
-                .location("New York")
-                .surname("Anderson")
-                .name("Tom")
-                .password("12345678")
-                .age(21)
-                .build();
+        CreateUserRequest rq = UserGenerator.getSimpleUser();
 
         UserSteps userApi = new UserSteps();
         CreateUserResponse rs = userApi.createUser(rq);
