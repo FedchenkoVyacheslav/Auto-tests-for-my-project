@@ -1,10 +1,8 @@
 package api.utils;
 
-import api.pojos.UserRequest;
-import api.pojos.CreateUserResponse;
 import api.pojos.UserLogin;
-import api.pojos.UserPojo;
-import io.restassured.builder.RequestSpecBuilder;
+import api.utils.services.BlogService;
+import api.utils.services.UserService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.specification.RequestSpecification;
@@ -16,14 +14,13 @@ public class RestWrapper {
     private static RequestSpecification REQ_SPEC;
     private Cookies cookies;
 
+    public UserService user;
+    public BlogService blogs;
+
     public RestWrapper(Cookies cookies){
         this.cookies = cookies;
-
-        REQ_SPEC = new RequestSpecBuilder()
-                .addCookies(cookies)
-                .setBaseUri(BASE_URL)
-                .setContentType(ContentType.JSON)
-                .build();
+        user = new UserService(cookies);
+        blogs = new BlogService(cookies);
     }
 
     public static RestWrapper loginAsUser(String login, String password){
@@ -36,34 +33,5 @@ public class RestWrapper {
                 .getDetailedCookies();
 
         return new RestWrapper(cookies);
-    }
-
-    private CreateUserResponse user;
-    public CreateUserResponse createUser(UserRequest rq) {
-        user = given()
-                .spec(REQ_SPEC)
-                .basePath("/users")
-                .body(rq)
-                .when().post()
-                .jsonPath().getObject("data", CreateUserResponse.class);
-        return user;
-    }
-
-    public UserPojo getUser(){
-        return given()
-                .spec(REQ_SPEC)
-                .basePath("/users/{id}")
-                .pathParam("id", user.getId())
-                .get()
-                .jsonPath().getObject("data", UserPojo.class);
-    }
-
-    public UserPojo getUser(String User_id) {
-        return given()
-                .spec(REQ_SPEC)
-                .basePath("/users/{id}")
-                .pathParam("id", User_id)
-                .get()
-                .jsonPath().getObject("data", UserPojo.class);
     }
 }
