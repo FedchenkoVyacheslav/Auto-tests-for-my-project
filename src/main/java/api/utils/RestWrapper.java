@@ -1,20 +1,42 @@
-package api.steps;
+package api.utils;
 
 import api.pojos.CreateUserRequest;
 import api.pojos.CreateUserResponse;
+import api.pojos.UserLogin;
 import api.pojos.UserPojo;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.http.Cookies;
 import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 
-public class UserSteps {
-    private static final RequestSpecification REQ_SPEC =
-            new RequestSpecBuilder()
-                    .setBaseUri("https://academy.directlinedev.com/api")
-                    .setContentType(ContentType.JSON)
-                    .build();
+public class RestWrapper {
+    private static final String BASE_URL = "https://academy.directlinedev.com/api";
+    private static RequestSpecification REQ_SPEC;
+    private Cookies cookies;
+
+    public RestWrapper(Cookies cookies){
+        this.cookies = cookies;
+
+        REQ_SPEC = new RequestSpecBuilder()
+                .addCookies(cookies)
+                .setBaseUri(BASE_URL)
+                .setContentType(ContentType.JSON)
+                .build();
+    }
+
+    public static RestWrapper loginAsUser(String login, String password){
+        Cookies cookies = given()
+                .contentType(ContentType.JSON)
+                .baseUri(BASE_URL)
+                .basePath("/users/login")
+                .body(new UserLogin(login, password))
+                .when().post()
+                .getDetailedCookies();
+
+        return new RestWrapper(cookies);
+    }
 
     private CreateUserResponse user;
     public CreateUserResponse createUser(CreateUserRequest rq) {
@@ -27,7 +49,7 @@ public class UserSteps {
         return user;
     }
 
-    public UserPojo getLastUser(){
+    public UserPojo getUser(){
         return given()
                 .spec(REQ_SPEC)
                 .basePath("/users/{id}")
@@ -36,7 +58,7 @@ public class UserSteps {
                 .jsonPath().getObject("data", UserPojo.class);
     }
 
-    public static UserPojo getUser(String User_id) {
+    public UserPojo getUser(String User_id) {
         return given()
                 .spec(REQ_SPEC)
                 .basePath("/users/{id}")
