@@ -10,14 +10,8 @@ import java.time.LocalDateTime;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateUserResponse{
-	private String password;
-	private String surname;
-	private String name;
-	private String location;
+public class CreateUserResponse extends UserRequest{
 	private int id;
-	private String email;
-	private int age;
 	private String token;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss.SSSZ")
 	@JsonDeserialize(using = DateDeserializer.class)

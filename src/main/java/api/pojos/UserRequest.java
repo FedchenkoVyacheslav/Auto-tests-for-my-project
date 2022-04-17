@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateUserRequest {
+public class UserRequest {
 	private String password;
 	private String surname;
 	private String name;

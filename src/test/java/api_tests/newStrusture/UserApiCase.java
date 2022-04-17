@@ -5,7 +5,7 @@ import api.utils.UserGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import api.pojos.CreateUserRequest;
+import api.pojos.UserRequest;
 import api.pojos.CreateUserResponse;
 import api.pojos.UserPojo;
 
@@ -34,7 +34,7 @@ public class UserApiCase {
     @Test
     @DisplayName("Should create new user")
     public void createUserCase() {
-        CreateUserRequest rq = UserGenerator.getSimpleUser();
+        UserRequest rq = UserGenerator.getSimpleUser();
         CreateUserResponse rs = api.createUser(rq);
 
         assertThat(rs).extracting(CreateUserResponse::getEmail).isEqualTo(rq.getEmail());

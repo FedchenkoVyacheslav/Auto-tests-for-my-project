@@ -1,6 +1,6 @@
 package api.utils;
 
-import api.pojos.CreateUserRequest;
+import api.pojos.UserRequest;
 import api.pojos.CreateUserResponse;
 import api.pojos.UserLogin;
 import api.pojos.UserPojo;
@@ -39,7 +39,7 @@ public class RestWrapper {
     }
 
     private CreateUserResponse user;
-    public CreateUserResponse createUser(CreateUserRequest rq) {
+    public CreateUserResponse createUser(UserRequest rq) {
         user = given()
                 .spec(REQ_SPEC)
                 .basePath("/users")

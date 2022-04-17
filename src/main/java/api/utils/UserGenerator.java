@@ -1,13 +1,13 @@
 package api.utils;
 
-import api.pojos.CreateUserRequest;
+import api.pojos.UserRequest;
 import selenium.Pages.BasePage;
 
 public class UserGenerator {
     private static String EMAIL = BasePage.getRandomLogin();
 
-    public static CreateUserRequest getSimpleUser() {
-        return CreateUserRequest.builder()
+    public static UserRequest getSimpleUser() {
+        return UserRequest.builder()
                 .email(EMAIL)
                 .location("New York")
                 .surname("Anderson")
