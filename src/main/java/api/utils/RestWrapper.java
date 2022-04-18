@@ -1,7 +1,7 @@
 package api.utils;
 
 import api.pojos.UserLogin;
-import api.utils.services.EmailService;
+import api.utils.services.MessageService;
 import api.utils.services.PostService;
 import api.utils.services.TagService;
 import api.utils.services.UserService;
@@ -17,14 +17,14 @@ public class RestWrapper {
     public UserService user;
     public PostService posts;
     public TagService tags;
-    public EmailService email;
+    public MessageService message;
 
     public RestWrapper(Cookies cookies){
         this.cookies = cookies;
         user = new UserService(cookies);
         posts = new PostService(cookies);
         tags = new TagService(cookies);
-        email = new EmailService(cookies);
+        message = new MessageService(cookies);
     }
 
     public static RestWrapper loginAsUser(String login, String password){

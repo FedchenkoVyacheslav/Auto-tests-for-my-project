@@ -1,22 +1,22 @@
 package api.utils.services;
 
-import api.pojos.EmailRequest;
+import api.pojos.MessageRequest;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class EmailService extends PostService {
+public class MessageService extends PostService {
     @Override
     protected String getBasePath() {
         return "/emails";
     }
 
-    public EmailService(Cookies cookies) {
+    public MessageService(Cookies cookies) {
         super(cookies);
     }
 
-    public Response sendMessage(EmailRequest rq) {
+    public Response sendMessage(MessageRequest rq) {
         return given()
                 .spec(REQ_SPEC)
                 .body(rq)

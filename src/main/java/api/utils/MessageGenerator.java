@@ -1,13 +1,13 @@
 package api.utils;
 
-import api.pojos.EmailRequest;
+import api.pojos.MessageRequest;
 import selenium.Pages.BasePage;
 
-public class EmailGenerator {
+public class MessageGenerator {
     private static String EMAIL = BasePage.getRandomLogin();
 
-    public static EmailRequest sendNewMessage() {
-        return EmailRequest.builder()
+    public static MessageRequest sendNewMessage() {
+        return MessageRequest.builder()
                 .body(String.format("{\"name\":\"Bob\"," +
                                 "\"message\":\"new message\"," +
                                 "\"email\":\"%s\"," +

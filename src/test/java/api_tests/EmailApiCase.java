@@ -1,7 +1,7 @@
 package api_tests;
 
-import api.pojos.EmailRequest;
-import api.utils.EmailGenerator;
+import api.pojos.MessageRequest;
+import api.utils.MessageGenerator;
 import api.utils.RestWrapper;
 import io.restassured.response.Response;
 import org.junit.BeforeClass;
@@ -20,8 +20,8 @@ public class EmailApiCase {
     @Test
     @DisplayName("Should send new message to email")
     public void shouldSendMessageToEmailCase() {
-        EmailRequest rq = EmailGenerator.sendNewMessage();
-        Response rs = api.email.sendMessage(rq);
+        MessageRequest rq = MessageGenerator.sendNewMessage();
+        Response rs = api.message.sendMessage(rq);
 
         Assertions.assertEquals(200, rs.statusCode());
         Assertions.assertTrue(rs.jsonPath().getBoolean("success"));
