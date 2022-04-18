@@ -5,13 +5,11 @@ import api.utils.services.PostService;
 import api.utils.services.UserService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
-import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 
 public class RestWrapper {
     private static final String BASE_URL = "https://academy.directlinedev.com/api";
-    private static RequestSpecification REQ_SPEC;
     private Cookies cookies;
 
     public UserService user;
