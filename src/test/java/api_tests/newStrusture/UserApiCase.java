@@ -1,13 +1,13 @@
 package api_tests.newStrusture;
 
+import api.pojos.UserPojo;
+import api.pojos.CreateUserResponse;
+import api.pojos.UserRequest;
 import api.utils.RestWrapper;
 import api.utils.UserGenerator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import api.pojos.UserRequest;
-import api.pojos.CreateUserResponse;
-import api.pojos.UserPojo;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
