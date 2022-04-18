@@ -1,4 +1,4 @@
-package api_tests.newStrusture;
+package api_tests;
 
 import api.pojos.UserPojo;
 import api.pojos.CreateUserResponse;
