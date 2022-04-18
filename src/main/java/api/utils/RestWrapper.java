@@ -2,6 +2,7 @@ package api.utils;
 
 import api.pojos.UserLogin;
 import api.utils.services.PostService;
+import api.utils.services.TagService;
 import api.utils.services.UserService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
@@ -14,11 +15,13 @@ public class RestWrapper {
 
     public UserService user;
     public PostService posts;
+    public TagService tags;
 
     public RestWrapper(Cookies cookies){
         this.cookies = cookies;
         user = new UserService(cookies);
         posts = new PostService(cookies);
+        tags = new TagService(cookies);
     }
 
     public static RestWrapper loginAsUser(String login, String password){
