@@ -26,4 +26,16 @@ public class EmailApiCase {
         Assertions.assertEquals(200, rs.statusCode());
         Assertions.assertTrue(rs.jsonPath().getBoolean("success"));
     }
+
+    @Test
+    @DisplayName("Shouldn't send message to the same email twice")
+    public void shouldNotSendMessageToSameEmailCase() {
+        MessageRequest rq = MessageGenerator.sendNewMessage();
+        api.message.sendMessage(rq);
+        Response secondRs = api.message.sendMessage(rq);
+
+        Assertions.assertEquals(200, secondRs.statusCode());
+        Assertions.assertFalse(secondRs.jsonPath().getBoolean("success"));
+        Assertions.assertEquals("Данна почта уже подписана на рассылку!", secondRs.jsonPath().getString("errors.to"));
+    }
 }
