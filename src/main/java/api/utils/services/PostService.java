@@ -30,9 +30,9 @@ public class PostService extends RestService{
                 .jsonPath().getList("data", PostPojo.class);
     }
 
-    public List<PostPojo> getPostsWithNumberOfViews(int min, int max){
+    public List<PostPojo> getPostsByFilter(String filter, int min, int max){
         return given().spec(REQ_SPEC)
-                .param("filter", String.format("{\"views\": {\"$between\": [%s, %s]}}", min, max))
+                .param("filter", String.format("{\"%s\": {\"$between\": [%s, %s]}}", filter, min, max))
                 .get()
                 .jsonPath().getList("data", PostPojo.class);
     }
