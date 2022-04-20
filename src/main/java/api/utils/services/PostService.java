@@ -22,4 +22,18 @@ public class PostService extends RestService{
                 .get()
                 .jsonPath().getList("data", PostPojo.class);
     }
+
+    public List<PostPojo> getPostsLimit(int limit){
+        return given().spec(REQ_SPEC)
+                .param("limit", limit)
+                .get()
+                .jsonPath().getList("data", PostPojo.class);
+    }
+
+    public List<PostPojo> getPostsWithNumberOfViews(int min, int max){
+        return given().spec(REQ_SPEC)
+                .param("filter", String.format("{\"views\": {\"$between\": [%s, %s]}}", min, max))
+                .get()
+                .jsonPath().getList("data", PostPojo.class);
+    }
 }
