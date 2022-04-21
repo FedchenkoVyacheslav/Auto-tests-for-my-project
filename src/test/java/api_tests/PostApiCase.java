@@ -2,7 +2,8 @@ package api_tests;
 
 import api.pojos.PostPojo;
 import api.utils.RestWrapper;
-import lombok.val;
+import com.google.common.collect.Lists;
+import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,22 +43,22 @@ public class PostApiCase {
     @Test
     @DisplayName("Should get posts depending on the number of views")
     public void shouldGetPostsDependingOnViews() {
-        List<PostPojo> posts = api.posts.getPostsByFilter("views",100, 500);
-        for (PostPojo post:posts) {
-           int numberOfViews = post.getViews();
-           assertTrue(numberOfViews > 100);
-           assertTrue(numberOfViews < 500);
+        List<PostPojo> posts = api.posts.getPostsByFilter("views", 100, 500);
+        for (PostPojo post : posts) {
+            int numberOfViews = post.getViews();
+            assertTrue(numberOfViews > 100);
+            assertTrue(numberOfViews < 500);
         }
 
-        posts = api.posts.getPostsByFilter("views",500, 1000);
-        for (PostPojo post:posts) {
+        posts = api.posts.getPostsByFilter("views", 500, 1000);
+        for (PostPojo post : posts) {
             int numberOfViews = post.getViews();
             assertTrue(numberOfViews > 500);
             assertTrue(numberOfViews < 1000);
         }
 
-        posts = api.posts.getPostsByFilter("views",1000, 2000);
-        for (PostPojo post:posts) {
+        posts = api.posts.getPostsByFilter("views", 1000, 2000);
+        for (PostPojo post : posts) {
             int numberOfViews = post.getViews();
             assertTrue(numberOfViews > 1000);
             assertTrue(numberOfViews < 2000);
@@ -67,23 +68,37 @@ public class PostApiCase {
     @Test
     @DisplayName("Should get posts depending on the number of comments")
     public void shouldGetPostsDependingOnComments() {
-        List<PostPojo> posts = api.posts.getPostsByFilter("commentsCount",0, 0);
-        for (PostPojo post:posts) {
+        List<PostPojo> posts = api.posts.getPostsByFilter("commentsCount", 0, 0);
+        for (PostPojo post : posts) {
             int numberOfComments = post.getCommentsCount();
             assertTrue(numberOfComments == 0);
         }
 
-        posts = api.posts.getPostsByFilter("commentsCount",0, 1);
-        for (PostPojo post:posts) {
+        posts = api.posts.getPostsByFilter("commentsCount", 0, 1);
+        for (PostPojo post : posts) {
             int numberOfComments = post.getCommentsCount();
             assertTrue(numberOfComments <= 1);
         }
 
-        posts = api.posts.getPostsByFilter("commentsCount",1, 50);
-        for (PostPojo post:posts) {
+        posts = api.posts.getPostsByFilter("commentsCount", 1, 50);
+        for (PostPojo post : posts) {
             int numberOfComments = post.getCommentsCount();
             assertTrue(numberOfComments > 1);
             assertTrue(numberOfComments < 50);
+        }
+    }
+
+    @Test
+    @DisplayName("Should get posts depending on tags")
+    public void shouldGetPostsDependingOnTags() {
+        List<String> tags = Lists.newArrayList("3", "4", "5");
+
+        Response rs = api.posts.getPostTags(tags);
+
+        List<List<Integer>> postTags = rs.jsonPath().getList("data.tags.tagId");
+
+        for (List<Integer> postTag:postTags) {
+            Assertions.assertThat(postTag).containsAnyOf(3, 4, 5);
         }
     }
 }

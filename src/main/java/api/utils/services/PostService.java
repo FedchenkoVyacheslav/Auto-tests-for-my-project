@@ -2,6 +2,7 @@ package api.utils.services;
 
 import api.pojos.PostPojo;
 import io.restassured.http.Cookies;
+import io.restassured.response.Response;
 
 import java.util.List;
 
@@ -21,6 +22,13 @@ public class PostService extends RestService{
         return given().spec(REQ_SPEC)
                 .get()
                 .jsonPath().getList("data", PostPojo.class);
+    }
+
+    public Response getPostTags(List<String> tags) {
+        return given().spec(REQ_SPEC)
+                .param("tags", tags.toString())
+                .when().get()
+                .then().extract().response();
     }
 
     public List<PostPojo> getPostsLimit(int limit){
