@@ -101,4 +101,20 @@ public class PostApiCase {
             Assertions.assertThat(postTag).containsAnyOf(3, 4, 5);
         }
     }
+
+    @Test
+    @DisplayName("Should get posts by partial match with search query")
+    public void searchGetPostsByPartialWordsMatch() {
+        List<PostPojo> posts = api.posts.getPostsByTitlePartialMatch("facts");
+        for (PostPojo post : posts) {
+            String title = post.getTitle().toLowerCase();
+            assertTrue(title.contains("facts"));
+        }
+    }
+
+    @Test
+    @DisplayName("Should sort posts by selected field")
+    public void searchSortPostsByField() {
+
+    }
 }

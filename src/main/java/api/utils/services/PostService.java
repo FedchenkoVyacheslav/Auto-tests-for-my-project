@@ -44,4 +44,11 @@ public class PostService extends RestService{
                 .get()
                 .jsonPath().getList("data", PostPojo.class);
     }
+
+    public List<PostPojo> getPostsByTitlePartialMatch(String text){
+        return given().spec(REQ_SPEC)
+                .param("filter", String.format("{\"title\":\"%s\"}", text))
+                .get()
+                .jsonPath().getList("data", PostPojo.class);
+    }
 }
