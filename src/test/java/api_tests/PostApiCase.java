@@ -3,12 +3,16 @@ package api_tests;
 import api.pojos.PostPojo;
 import api.utils.RestWrapper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
+import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
@@ -115,6 +119,13 @@ public class PostApiCase {
     @Test
     @DisplayName("Should sort posts by selected field")
     public void searchSortPostsByField() {
+        List<PostPojo> posts = api.posts.sortPostsBy("title");
+        Assertions.assertThat(posts).extracting(PostPojo::getTitle).isSorted();
 
+        posts = api.posts.sortPostsBy("views");
+        Assertions.assertThat(posts).extracting(PostPojo::getViews).isSorted();
+
+        posts = api.posts.sortPostsBy("date");
+        Assertions.assertThat(posts).extracting(PostPojo::getDate).isSorted();
     }
 }

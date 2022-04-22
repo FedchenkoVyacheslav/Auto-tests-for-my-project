@@ -51,4 +51,11 @@ public class PostService extends RestService{
                 .get()
                 .jsonPath().getList("data", PostPojo.class);
     }
+
+    public List<PostPojo> sortPostsBy(String field){
+        return given().spec(REQ_SPEC)
+                .param("sort", String.format("[\"%s\",\"ASC\"]", field))
+                .get()
+                .jsonPath().getList("data", PostPojo.class);
+    }
 }
