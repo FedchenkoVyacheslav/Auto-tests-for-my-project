@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-public abstract class BasePage {
+public class BasePage {
     protected final WebDriver driver;
 
     public static String getRandomLogin() {

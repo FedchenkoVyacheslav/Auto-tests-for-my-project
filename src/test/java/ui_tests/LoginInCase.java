@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginInCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String EMAIL = "t1@gmail.com";
+    private final String EMAIL = "g1@gmail.com";
     private final String PASSWORD = "12345678";
     private final String SIGN_IN = "form-sing-in";
     MainPage myMainPage;
