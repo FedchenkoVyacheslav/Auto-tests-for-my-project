@@ -79,11 +79,13 @@ public class UserApiCase {
     @Test
     @DisplayName("Should login user")
     public void shouldLoginUserCase() {
-        Response rs = api.user.loginResponse("g1@gmail.com", "12345678");
+        UserRequest rq = UserGenerator.getSimpleUser();
+        CreateUserResponse rs = api.user.createUser(rq);
+        Response loginResp = api.user.loginResponse(rq.getEmail(), rq.getPassword());
 
-        Assertions.assertEquals(200, rs.statusCode());
-        Assertions.assertEquals(246, rs.jsonPath().getInt("data.userId"));
-        Assertions.assertNotNull(rs.jsonPath().getString("data.token"));
+        Assertions.assertEquals(200, loginResp.statusCode());
+        Assertions.assertEquals(api.user.getUser(rs.getId()).getId(), loginResp.jsonPath().getInt("data.userId"));
+        Assertions.assertNotNull(loginResp.jsonPath().getString("data.token"));
     }
 
     @Test
