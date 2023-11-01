@@ -65,13 +65,15 @@ public class UserApiCase {
     @Test
     @DisplayName("Should get user")
     public void getUserCase() {
-        assertThat(api.user.getUser(246)).extracting(UserPojo::getId).isEqualTo(246);
-        assertThat(api.user.getUser(246)).extracting(UserPojo::getEmail).isEqualTo("g1@gmail.com");
-        assertThat(api.user.getUser(246)).extracting(UserPojo::getLocation).isEqualTo("Los Angeles");
-        assertThat(api.user.getUser(246)).extracting(UserPojo::getSurname).isEqualTo("Smith");
-        assertThat(api.user.getUser(246)).extracting(UserPojo::getName).isEqualTo("Will");
-        assertThat(api.user.getUser(246)).extracting(UserPojo::getPassword).isEqualTo("12345678");
-        assertThat(api.user.getUser(246)).extracting(UserPojo::getAge).isEqualTo(30);
+        UserRequest rq = UserGenerator.getSimpleUser();
+        CreateUserResponse rs = api.user.createUser(rq);
+
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getEmail).isEqualTo(rq.getEmail());
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getLocation).isEqualTo("New York");
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getSurname).isEqualTo("Anderson");
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getName).isEqualTo("Tom");
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getPassword).isEqualTo("12345678");
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getAge).isEqualTo(21);
     }
 
     @Test
