@@ -1,6 +1,7 @@
 package ui_tests;
 
 import selenium.Actions.PrepareDriver;
+import selenium.Actions.Screenshot;
 import selenium.Pages.BasePage;
 import selenium.Pages.MainPage;
 import org.junit.After;
@@ -76,6 +77,8 @@ public class EditProfileCase {
                 .loginWithCredential(NEW_EMAIL, PASSWORD)
                 .goToProfilePage()
                 .confirmSavedValues(NEW_NAME, NEW_SURNAME, NEW_EMAIL, NEW_LOCATION, NEW_AGE);
+
+        Screenshot.takeScreenshot();
     }
 
     @Test
