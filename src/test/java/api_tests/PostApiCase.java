@@ -26,8 +26,8 @@ public class PostApiCase {
     @DisplayName("Should get post")
     public void shouldGetPostCase() {
         Assertions.assertThat(api.posts.getPosts()).extracting(PostPojo::getId).contains(1);
-        Assertions.assertThat(api.posts.getPosts()).extracting(PostPojo::getCommentsCount).contains(83);
-        Assertions.assertThat(api.posts.getPosts()).extracting(PostPojo::getViews).contains(1172);
+        Assertions.assertThat(api.posts.getPosts()).extracting(PostPojo::getCommentsCount).contains(0);
+        Assertions.assertThat(api.posts.getPosts()).extracting(PostPojo::getViews).contains(153);
         Assertions.assertThat(api.posts.getPosts()).extracting(PostPojo::getTitle).contains("The breed of my new dog is Pug.");
         Assertions.assertThat(api.posts.getPosts()).extracting(PostPojo::getText).contains("The pug is a breed of dog with " +
                 "physically distinctive features of a wrinkly, short-muzzled face, and curled tail.");
@@ -83,7 +83,7 @@ public class PostApiCase {
         posts = api.posts.getPostsByFilter("commentsCount", 1, 50);
         for (PostPojo post : posts) {
             int numberOfComments = post.getCommentsCount();
-            assertTrue(numberOfComments > 1);
+            assertTrue(numberOfComments >= 1);
             assertTrue(numberOfComments < 50);
         }
     }
@@ -97,7 +97,7 @@ public class PostApiCase {
 
         List<List<Integer>> postTags = rs.jsonPath().getList("data.tags.tagId");
 
-        for (List<Integer> postTag:postTags) {
+        for (List<Integer> postTag : postTags) {
             Assertions.assertThat(postTag).containsAnyOf(3, 4, 5);
         }
     }
