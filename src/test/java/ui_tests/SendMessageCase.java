@@ -16,12 +16,11 @@ public class SendMessageCase {
     Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-
-    private String NAME = faker.name().firstName();
-    private String SURNAME = faker.name().lastName();
-    private String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
-    private String MESSAGE = faker.howIMetYourMother().catchPhrase();
-    private String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
+    private final String NAME = faker.name().firstName();
+    private final String SURNAME = faker.name().lastName();
+    private final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private final String MESSAGE = faker.howIMetYourMother().catchPhrase();
+    private final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
     private final String PHONE = "+1 234 567-89-00";
     private final String TEXT = faker.howIMetYourMother().quote();
     private final String SEND_MESSAGE = "form-message";

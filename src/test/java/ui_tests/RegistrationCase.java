@@ -16,12 +16,12 @@ public class RegistrationCase {
     Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private String NAME = faker.name().firstName();
-    private String SURNAME = faker.name().lastName();
-    private String PASSWORD = faker.internet().password();
-    private String LOCATION = faker.address().city();
-    private String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
-    private String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
+    private final String NAME = faker.name().firstName();
+    private final String SURNAME = faker.name().lastName();
+    private final String PASSWORD = faker.internet().password();
+    private final String LOCATION = faker.address().city();
+    private final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
     private final String REGISTER = "form-register";
     MainPage myMainPage;
 
