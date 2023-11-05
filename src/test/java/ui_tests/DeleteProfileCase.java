@@ -1,5 +1,6 @@
 package ui_tests;
 
+import com.github.javafaker.Faker;
 import selenium.Actions.PrepareDriver;
 import selenium.Pages.BasePage;
 import selenium.Pages.MainPage;
@@ -12,14 +13,15 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 public class DeleteProfileCase {
+    Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String NAME = "Tom";
-    private final String SURNAME = "Anderson";
-    private String EMAIL = BasePage.getRandomLogin(NAME, SURNAME);
-    private final String PASSWORD = "12345678";
-    private final String LOCATION = "New York City";
-    private final String AGE = "35";
+    private String NAME = faker.name().firstName();
+    private String SURNAME = faker.name().lastName();
+    private String PASSWORD = faker.internet().password();
+    private String LOCATION = faker.address().city();
+    private String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
     MainPage myMainPage;
 
     @Before

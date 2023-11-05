@@ -69,11 +69,11 @@ public class UserApiCase {
         CreateUserResponse rs = api.user.createUser(rq);
 
         assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getEmail).isEqualTo(rq.getEmail());
-        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getLocation).isEqualTo("New York");
-        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getSurname).isEqualTo("Anderson");
-        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getName).isEqualTo("Tom");
-        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getPassword).isEqualTo("12345678");
-        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getAge).isEqualTo(21);
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getLocation).isEqualTo(rq.getLocation());
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getSurname).isEqualTo(rq.getSurname());
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getName).isEqualTo(rq.getName());
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getPassword).isEqualTo(rq.getPassword());
+        assertThat(api.user.getUser(rs.getId())).extracting(UserPojo::getAge).isEqualTo(rq.getAge());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class UserApiCase {
 
     @Test
     @DisplayName("Shouldn't login user with invalid email")
-    public void shouldLoginUserWithInvalidEmailCase() {
+    public void shouldNotLoginUserWithInvalidEmailCase() {
         Response rs = api.user.loginResponse("11111", "12345678");
 
         Assertions.assertEquals(422, rs.statusCode());
@@ -100,7 +100,7 @@ public class UserApiCase {
 
     @Test
     @DisplayName("Shouldn't login user with wrong combination of email and password")
-    public void shouldLoginUserWithWrongCombinationCase() {
+    public void shouldNotLoginUserWithWrongCombinationCase() {
         Response rs = api.user.loginResponse("g1@gmail.com", "1111111");
 
         Assertions.assertEquals(400, rs.statusCode());
@@ -143,7 +143,8 @@ public class UserApiCase {
         Response rsCreate = api.user.getResponse(rq);
 
         String email = rsCreate.jsonPath().getString("data.email");
-        Response rsLogin = api.user.loginResponse(email, "12345678");
+        String password = rsCreate.jsonPath().getString("data.password");
+        Response rsLogin = api.user.loginResponse(email, password);
 
         String accessToken = rsLogin.jsonPath().getString("data.token");
         int id = rsLogin.jsonPath().getInt("data.userId");

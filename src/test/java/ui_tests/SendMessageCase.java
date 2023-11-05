@@ -1,5 +1,6 @@
 package ui_tests;
 
+import com.github.javafaker.Faker;
 import selenium.Actions.PrepareDriver;
 import selenium.Pages.BasePage;
 import selenium.Pages.MainPage;
@@ -12,19 +13,22 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 public class SendMessageCase {
+    Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String NAME = "Tom";
-    private final String SURNAME = "Anderson";
-    private final String MESSAGE = "Greetings";
-    private String EMAIL = BasePage.getRandomLogin(NAME, SURNAME);
+
+    private String NAME = faker.name().firstName();
+    private String SURNAME = faker.name().lastName();
+    private String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private String MESSAGE = faker.howIMetYourMother().catchPhrase();
+    private String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
     private final String PHONE = "+1 234 567-89-00";
-    private final String TEXT = "Nice to meet you!";
+    private final String TEXT = faker.howIMetYourMother().quote();
     private final String SEND_MESSAGE = "form-message";
     MainPage myMainPage;
 
     @Before
-    public void setup(){
+    public void setup() {
         driver = PrepareDriver.driverInit("chrome");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -34,7 +38,7 @@ public class SendMessageCase {
 
     @Test
     @DisplayName("Should send new message")
-    public void sendMessage(){
+    public void sendMessage() {
         myMainPage
                 .clickOnSendMessage()
                 .sendMessage(NAME, MESSAGE, EMAIL, PHONE, TEXT)
@@ -43,7 +47,7 @@ public class SendMessageCase {
 
     @Test
     @DisplayName("Should check validation errors in send message popup")
-    public void checkValidationErrors(){
+    public void checkValidationErrors() {
         myMainPage
                 .clickOnSendMessage()
 
@@ -85,7 +89,7 @@ public class SendMessageCase {
     }
 
     @After
-    public void quit(){
+    public void quit() {
         driver.quit();
     }
 }

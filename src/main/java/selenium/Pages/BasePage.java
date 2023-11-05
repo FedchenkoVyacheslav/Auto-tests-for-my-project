@@ -2,7 +2,6 @@ package selenium.Pages;
 
 import selenium.Elements.Checkbox;
 import selenium.Elements.ValidationMessage;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,13 +10,20 @@ import org.openqa.selenium.support.PageFactory;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class BasePage {
     protected final WebDriver driver;
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+    public static String getBirthYear(String age) {
+        int year = Integer.parseInt(sdf.format(new Date())) - Integer.parseInt(age);
+        return String.valueOf(year);
+    }
 
-    public static String getRandomLogin(String name, String surname) {
-        return String.format("%s.%s.%s@gmail.com", name, surname, RandomStringUtils.randomAlphanumeric(4)).toLowerCase();
+    public static String getUserEmail(String name, String surname, String age) {
+        return String.format("%s.%s.%s@gmail.com", name, surname, getBirthYear(age)).toLowerCase();
     }
 
     public BasePage(WebDriver driver) {

@@ -1,5 +1,6 @@
 package ui_tests;
 
+import com.github.javafaker.Faker;
 import selenium.Actions.PrepareDriver;
 import selenium.Actions.Screenshot;
 import selenium.Pages.BasePage;
@@ -13,20 +14,21 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 public class EditProfileCase {
+    Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String NAME = "Tom";
-    private final String SURNAME = "Anderson";
-    private final String PASSWORD = "12345678";
-    private final String LOCATION = "New York City";
-    private final String AGE = "35";
-    private String EMAIL = BasePage.getRandomLogin(NAME, SURNAME);
-    private final String NEW_NAME = "Neo";
-    private final String NEW_SURNAME = "Savior";
-    private String NEW_EMAIL = BasePage.getRandomLogin(NEW_NAME, NEW_SURNAME);
+    private String NAME = faker.name().firstName();
+    private String SURNAME = faker.name().lastName();
+    private String PASSWORD = faker.internet().password();
+    private String LOCATION = faker.address().city();
+    private String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
+    private final String NEW_NAME = "NEO";
+    private final String NEW_SURNAME = faker.name().lastName();
+    private final String NEW_AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private String NEW_EMAIL = BasePage.getUserEmail(NEW_NAME, NEW_SURNAME, NEW_AGE);
     private final String NEW_PASSWORD = "87654321";
     private final String NEW_LOCATION = "Zion";
-    private final String NEW_AGE = "36";
     private final String PATH = "src/test/resources/testData/neo_matrix.jpg";
     private final String PASSWORD_EDIT = "form-password-edit";
     private final String DATA_EDIT = "form-editing-data";
