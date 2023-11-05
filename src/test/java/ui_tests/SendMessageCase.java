@@ -15,8 +15,9 @@ public class SendMessageCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
     private final String NAME = "Tom";
+    private final String SURNAME = "Anderson";
     private final String MESSAGE = "Greetings";
-    private String EMAIL = BasePage.getRandomLogin();
+    private String EMAIL = BasePage.getRandomLogin(NAME, SURNAME);
     private final String PHONE = "+1 234 567-89-00";
     private final String TEXT = "Nice to meet you!";
     private final String SEND_MESSAGE = "form-message";

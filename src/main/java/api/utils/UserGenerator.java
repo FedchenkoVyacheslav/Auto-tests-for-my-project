@@ -4,7 +4,7 @@ import api.pojos.UserRequest;
 import selenium.Pages.BasePage;
 
 public class UserGenerator {
-    private static String EMAIL = BasePage.getRandomLogin();
+    private static String EMAIL = BasePage.getRandomLogin("Tom", "Anderson");
 
     public static UserRequest getSimpleUser() {
         return UserRequest.builder()

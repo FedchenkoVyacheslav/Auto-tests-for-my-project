@@ -15,15 +15,15 @@ import java.util.concurrent.TimeUnit;
 public class EditProfileCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private String EMAIL = BasePage.getRandomLogin();
     private final String NAME = "Tom";
     private final String SURNAME = "Anderson";
     private final String PASSWORD = "12345678";
     private final String LOCATION = "New York City";
     private final String AGE = "35";
-    private String NEW_EMAIL = BasePage.getRandomLogin();
+    private String EMAIL = BasePage.getRandomLogin(NAME, SURNAME);
     private final String NEW_NAME = "Neo";
-    private final String NEW_SURNAME = "The One";
+    private final String NEW_SURNAME = "Savior";
+    private String NEW_EMAIL = BasePage.getRandomLogin(NEW_NAME, NEW_SURNAME);
     private final String NEW_PASSWORD = "87654321";
     private final String NEW_LOCATION = "Zion";
     private final String NEW_AGE = "36";
@@ -33,7 +33,7 @@ public class EditProfileCase {
     MainPage myMainPage;
 
     @Before
-    public void setup(){
+    public void setup() {
         driver = PrepareDriver.driverInit("chrome");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -43,7 +43,7 @@ public class EditProfileCase {
 
     @Test
     @DisplayName("Should change password")
-    public void editPassword(){
+    public void editPassword() {
         myMainPage
                 .clickOnRegister()
                 .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
@@ -62,7 +62,7 @@ public class EditProfileCase {
 
     @Test
     @DisplayName("Should update user data")
-    public void editData(){
+    public void editData() {
         myMainPage
                 .clickOnRegister()
                 .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
@@ -83,7 +83,7 @@ public class EditProfileCase {
 
     @Test
     @DisplayName("Should check validation errors in edit password popup")
-    public void checkValidationErrorsOnEditPassword(){
+    public void checkValidationErrorsOnEditPassword() {
         myMainPage
                 .clickOnRegister()
                 .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
@@ -164,7 +164,7 @@ public class EditProfileCase {
     }
 
     @After
-    public void quit(){
+    public void quit() {
         driver.quit();
     }
 }

@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit;
 public class DeleteProfileCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private String EMAIL = BasePage.getRandomLogin();
     private final String NAME = "Tom";
     private final String SURNAME = "Anderson";
+    private String EMAIL = BasePage.getRandomLogin(NAME, SURNAME);
     private final String PASSWORD = "12345678";
     private final String LOCATION = "New York City";
     private final String AGE = "35";

@@ -4,7 +4,7 @@ import api.pojos.MessageRequest;
 import selenium.Pages.BasePage;
 
 public class MessageGenerator {
-    private static String EMAIL = BasePage.getRandomLogin();
+    private static String EMAIL = BasePage.getRandomLogin("Bob", "Smith");
 
     public static MessageRequest sendNewMessage() {
         return MessageRequest.builder()
