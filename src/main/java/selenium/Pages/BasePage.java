@@ -17,7 +17,7 @@ public class BasePage {
     protected final WebDriver driver;
 
     public static String getRandomLogin(String name, String surname) {
-        return String.format("%s.%s.%s@gmail.com", name, surname, RandomStringUtils.randomAlphanumeric(4));
+        return String.format("%s.%s.%s@gmail.com", name, surname, RandomStringUtils.randomAlphanumeric(4)).toLowerCase();
     }
 
     public BasePage(WebDriver driver) {
