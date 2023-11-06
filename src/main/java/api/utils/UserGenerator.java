@@ -6,12 +6,12 @@ import selenium.Pages.BasePage;
 
 public class UserGenerator {
     static Faker faker = new Faker();
-    private static String NAME = faker.name().firstName();
-    private static String SURNAME = faker.name().lastName();
-    private static String PASSWORD = faker.internet().password();
-    private static String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
-    private static String LOCATION = faker.address().city();
-    private static String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
+    private static final String NAME = faker.name().firstName();
+    private static final String SURNAME = faker.name().lastName();
+    private static final String PASSWORD = faker.internet().password();
+    private static final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private static final String LOCATION = faker.address().city();
+    private static final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
 
     public static UserRequest getSimpleUser() {
         return UserRequest.builder()

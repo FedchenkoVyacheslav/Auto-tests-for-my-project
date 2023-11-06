@@ -1,20 +1,27 @@
 package ui_tests;
 
+import com.github.javafaker.Faker;
 import selenium.Actions.PrepareDriver;
+import selenium.Pages.BasePage;
 import selenium.Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
+
 import java.util.concurrent.TimeUnit;
 
-public class LoginInCase {
+public class DeleteProfileITCase {
+    Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String EMAIL = "g1@gmail.com";
-    private final String PASSWORD = "12345678";
-    private final String SIGN_IN = "form-sing-in";
+    private final String NAME = faker.name().firstName();
+    private final String SURNAME = faker.name().lastName();
+    private final String PASSWORD = faker.internet().password();
+    private final String LOCATION = faker.address().city();
+    private final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
     MainPage myMainPage;
 
     @Before
@@ -27,28 +34,20 @@ public class LoginInCase {
     }
 
     @Test
-    @DisplayName("Should login user")
-    public void loginLogoutToProfile(){
+    @DisplayName("Should delete user")
+    public void deleteProfile(){
         myMainPage
+                .clickOnRegister()
+                .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
                 .clickOnSignIn()
                 .loginWithCredential(EMAIL, PASSWORD)
-                .checkValidMessagesInForm(SIGN_IN)
                 .goToProfilePage()
-                .checkUrlIsValid(URL + "pages/profile/")
-                .clickOnSignOut()
-                .checkUrlIsValid(URL);
-    }
-
-    @Test
-    @DisplayName("Should check validation errors in login popup")
-    public void checkValidationErrorsOnLogin(){
-        myMainPage
+                .clickOnDeleteAccountButton()
+                .clickOnDeleteAccountModalButton()
+                .checkUrlIsValid(URL)
                 .clickOnSignIn()
-                .checkErrorInLoginForm("This field is required")
-                .typeEmail("1")
-                .checkErrorInLoginForm("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
-                .typeEmail("test@mail.com")
-                .typePassword("1")
+                .typeEmail(EMAIL)
+                .typePassword(PASSWORD)
                 .checkErrorInLoginForm("This combination, mail and password were not found!");
     }
 

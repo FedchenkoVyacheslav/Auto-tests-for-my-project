@@ -6,10 +6,10 @@ import selenium.Pages.BasePage;
 
 public class MessageGenerator {
     static Faker faker = new Faker();
-    private static String NAME = faker.name().firstName();
-    private static String SURNAME = faker.name().lastName();
-    private static String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
-    private static String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
+    private static final String NAME = faker.name().firstName();
+    private static final String SURNAME = faker.name().lastName();
+    private static final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
+    private static final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
 
     public static MessageRequest sendNewMessage() {
         return MessageRequest.builder()

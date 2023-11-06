@@ -12,7 +12,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class RegistrationCase {
+public class RegisterITCase {
     Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
