@@ -17,9 +17,12 @@ import java.util.List;
 public class BasePage {
     protected final WebDriver driver;
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+    public static int getCurrentYear() {
+        return Integer.parseInt(sdf.format(new Date()));
+    }
     public static String getBirthYear(String age) {
-        int year = Integer.parseInt(sdf.format(new Date())) - Integer.parseInt(age);
-        return String.valueOf(year);
+        int birthYear = getCurrentYear() - Integer.parseInt(age);
+        return String.valueOf(birthYear);
     }
 
     public static String getUserEmail(String name, String surname, String age) {
