@@ -114,7 +114,7 @@ public class BlogPage extends BasePage {
     }
 
     public BlogPage checkNumberOfViewsInBlogs(String number) {
-        List<Integer> numbersOfViews = new ArrayList<Integer>();
+        List<Integer> numbersOfViews = new ArrayList<>();
         List<WebElement> blogElements = driver.findElements(By.xpath("//li[@class='blog__item']//span[contains(@class, 'blog__views')]"));
         for (WebElement blogElement : blogElements) {
             int numberOfViews = parseInt(blogElement.getText().replaceAll("\\D+", ""));
@@ -146,7 +146,7 @@ public class BlogPage extends BasePage {
     }
 
     public BlogPage checkNumberOfCommentsInBlogs(String number) {
-        List<Integer> numbersOfComments = new ArrayList<Integer>();
+        List<Integer> numbersOfComments = new ArrayList<>();
         List<WebElement> blogElements = driver.findElements(By.xpath("//li[@class='blog__item']//span[contains(@class, 'blog__comments')]"));
         for (WebElement blogElement : blogElements) {
             int numberOfComments = parseInt(blogElement.getText().replaceAll("\\D+", ""));

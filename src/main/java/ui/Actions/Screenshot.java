@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 
 public class Screenshot {
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     public static void takeScreenshot() {
         Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
