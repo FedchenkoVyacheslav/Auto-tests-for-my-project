@@ -1,7 +1,7 @@
-package selenium.Pages;
+package ui.Pages;
 
-import selenium.Elements.Checkbox;
-import selenium.Elements.ValidationMessage;
+import ui.Elements.Checkbox;
+import ui.Elements.ValidationMessage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

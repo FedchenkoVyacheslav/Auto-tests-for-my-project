@@ -1,4 +1,4 @@
-package selenium.Actions;
+package ui.Actions;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

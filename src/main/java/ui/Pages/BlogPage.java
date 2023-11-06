@@ -1,4 +1,4 @@
-package selenium.Pages;
+package ui.Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -85,7 +85,7 @@ public class BlogPage extends BasePage {
     public BlogPage checkTagInBlog(int tagNumber) {
         List<WebElement> blogTags = driver.findElements(By.xpath("//li[contains(@class, 'blog__tag')]"));
         for (WebElement blogTag : blogTags) {
-            assertEquals(tagNumber, parseInt(blogTag.getAttribute("ariaLabel").replaceAll("\\D+","")));
+            assertEquals(tagNumber, parseInt(blogTag.getAttribute("ariaLabel").replaceAll("\\D+", "")));
         }
         return this;
     }
@@ -94,17 +94,17 @@ public class BlogPage extends BasePage {
         List<WebElement> commentBlocks = driver.findElements(By.xpath("//input[@name='commentsCount']/.."));
         switch (comments) {
             case "0":
-                for (int i=0; i<commentBlocks.size(); i++) {
+                for (int i = 0; i < commentBlocks.size(); i++) {
                     commentBlocks.get(0).click();
                 }
                 return this;
             case "0-1":
-                for (int i=0; i<commentBlocks.size(); i++) {
+                for (int i = 0; i < commentBlocks.size(); i++) {
                     commentBlocks.get(1).click();
                 }
                 return this;
             case "1-50":
-                for (int i=0; i<commentBlocks.size(); i++) {
+                for (int i = 0; i < commentBlocks.size(); i++) {
                     commentBlocks.get(2).click();
                 }
                 return this;
@@ -117,25 +117,25 @@ public class BlogPage extends BasePage {
         List<Integer> numbersOfViews = new ArrayList<Integer>();
         List<WebElement> blogElements = driver.findElements(By.xpath("//li[@class='blog__item']//span[contains(@class, 'blog__views')]"));
         for (WebElement blogElement : blogElements) {
-            int numberOfViews = parseInt(blogElement.getText().replaceAll("\\D+",""));
+            int numberOfViews = parseInt(blogElement.getText().replaceAll("\\D+", ""));
             numbersOfViews.add(numberOfViews);
         }
 
         switch (number) {
             case "100-500":
-                for(Integer view : numbersOfViews) {
+                for (Integer view : numbersOfViews) {
                     assertTrue(100 < view);
                     assertTrue(500 > view);
                 }
                 return this;
             case "500-1000":
-                for(Integer view : numbersOfViews) {
+                for (Integer view : numbersOfViews) {
                     assertTrue(500 < view);
                     assertTrue(1000 > view);
                 }
                 return this;
             case "1000-2000":
-                for(Integer view : numbersOfViews) {
+                for (Integer view : numbersOfViews) {
                     assertTrue(1000 < view);
                     assertTrue(2000 > view);
                 }
@@ -149,23 +149,23 @@ public class BlogPage extends BasePage {
         List<Integer> numbersOfComments = new ArrayList<Integer>();
         List<WebElement> blogElements = driver.findElements(By.xpath("//li[@class='blog__item']//span[contains(@class, 'blog__comments')]"));
         for (WebElement blogElement : blogElements) {
-            int numberOfComments = parseInt(blogElement.getText().replaceAll("\\D+",""));
+            int numberOfComments = parseInt(blogElement.getText().replaceAll("\\D+", ""));
             numbersOfComments.add(numberOfComments);
         }
 
         switch (number) {
             case "0":
-                for(Integer comment : numbersOfComments) {
+                for (Integer comment : numbersOfComments) {
                     assertTrue(0 == comment);
                 }
                 return this;
             case "0-1":
-                for(Integer comment : numbersOfComments) {
+                for (Integer comment : numbersOfComments) {
                     assertTrue(1 >= comment);
                 }
                 return this;
             case "1-50":
-                for(Integer comment : numbersOfComments) {
+                for (Integer comment : numbersOfComments) {
                     assertTrue(1 < comment);
                     assertTrue(50 > comment);
                 }

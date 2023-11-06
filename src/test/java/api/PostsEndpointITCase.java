@@ -1,4 +1,4 @@
-package api_tests;
+package api;
 
 import api.pojos.PostPojo;
 import api.utils.RestWrapper;
@@ -14,7 +14,7 @@ import java.util.List;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ApiPostITCase {
+public class PostsEndpointITCase {
     private static RestWrapper api;
 
     @BeforeClass

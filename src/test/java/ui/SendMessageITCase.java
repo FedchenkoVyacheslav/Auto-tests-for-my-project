@@ -1,9 +1,9 @@
-package ui_tests;
+package ui;
 
 import com.github.javafaker.Faker;
-import selenium.Actions.PrepareDriver;
-import selenium.Pages.BasePage;
-import selenium.Pages.MainPage;
+import ui.Actions.PrepareDriver;
+import ui.Pages.BasePage;
+import ui.Pages.MainPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

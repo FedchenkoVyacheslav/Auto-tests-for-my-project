@@ -1,4 +1,4 @@
-package api_tests;
+package api;
 
 import api.pojos.MessageRequest;
 import api.utils.MessageGenerator;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 
-public class ApiEmailITCase {
+public class EmailsEndpointITCase {
     private static RestWrapper api;
 
     @BeforeClass

@@ -2,7 +2,7 @@ package api.utils;
 
 import api.pojos.UserRequest;
 import com.github.javafaker.Faker;
-import selenium.Pages.BasePage;
+import ui.Pages.BasePage;
 
 public class UserGenerator {
     static Faker faker = new Faker();

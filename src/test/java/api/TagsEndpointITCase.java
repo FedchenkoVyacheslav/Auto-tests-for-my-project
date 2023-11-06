@@ -1,4 +1,4 @@
-package api_tests;
+package api;
 
 import api.pojos.TagPojo;
 import api.utils.RestWrapper;
@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-public class ApiTagITCase {
+public class TagsEndpointITCase {
     private static RestWrapper api;
 
     @BeforeClass

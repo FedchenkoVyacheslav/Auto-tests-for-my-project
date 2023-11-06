@@ -1,4 +1,4 @@
-package selenium.Pages;
+package ui.Pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +8,7 @@ import java.io.File;
 
 import static org.junit.Assert.*;
 
-public class ProfilePage extends BasePage{
+public class ProfilePage extends BasePage {
     public ProfilePage(WebDriver driver) {
         super(driver);
     }

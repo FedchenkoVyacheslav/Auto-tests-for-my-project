@@ -1,4 +1,4 @@
-package selenium.Elements;
+package ui.Elements;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
