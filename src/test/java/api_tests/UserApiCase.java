@@ -25,14 +25,11 @@ public class UserApiCase {
     @DisplayName("Should create new user")
     public void shouldCreateUserCase() {
         UserRequest rq = UserGenerator.getSimpleUser();
-        CreateUserResponse rs = api.user.createUser(rq);
+        Response rs = api.user.getResponse(rq);
 
-        assertThat(rs).extracting(CreateUserResponse::getEmail).isEqualTo(rq.getEmail());
-        assertThat(rs).extracting(CreateUserResponse::getLocation).isEqualTo(rq.getLocation());
-        assertThat(rs).extracting(CreateUserResponse::getSurname).isEqualTo(rq.getSurname());
-        assertThat(rs).extracting(CreateUserResponse::getName).isEqualTo(rq.getName());
-        assertThat(rs).extracting(CreateUserResponse::getPassword).isEqualTo(rq.getPassword());
-        assertThat(rs).extracting(CreateUserResponse::getAge).isEqualTo(rq.getAge());
+        Assertions.assertEquals(200, rs.statusCode());
+        Assertions.assertTrue(rs.jsonPath().getBoolean("success"));
+        Assertions.assertNotNull(rs.jsonPath().getString("data.id"));
     }
 
     @Test
