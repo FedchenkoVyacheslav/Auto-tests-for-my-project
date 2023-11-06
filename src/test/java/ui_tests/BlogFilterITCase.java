@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class BlogFilterITCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private int ALL_TAGS[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    private final int[] ALL_TAGS = { 1, 2, 3, 4, 5, 6, 7, 8 };
     MainPage myMainPage;
 
     @Before

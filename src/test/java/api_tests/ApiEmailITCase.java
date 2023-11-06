@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 
-public class EmailApiCase {
+public class ApiEmailITCase {
     private static RestWrapper api;
 
     @BeforeClass

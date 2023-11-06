@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 
-public class UserApiCase {
+public class ApiUserITCase {
     private static RestWrapper api;
 
     @BeforeClass

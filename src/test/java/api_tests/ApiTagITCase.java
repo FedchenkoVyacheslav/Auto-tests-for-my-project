@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-public class TagApiCase {
+public class ApiTagITCase {
     private static RestWrapper api;
 
     @BeforeClass

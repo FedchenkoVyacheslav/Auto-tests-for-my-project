@@ -14,7 +14,7 @@ import java.util.List;
 import static com.thoughtworks.selenium.SeleneseTestBase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PostApiCase {
+public class ApiPostITCase {
     private static RestWrapper api;
 
     @BeforeClass
