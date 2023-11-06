@@ -19,15 +19,15 @@ public class PrepareDriver {
         switch (browser) {
             case "chrome":
                 System.setProperty("webdriver.chrome.driver", "C:/chromedriver/chromedriver.exe");
-                DesiredCapabilities desiredCapabilities = DesiredCapabilities.chrome();
-                desiredCapabilities.setCapability(CapabilityType.LOGGING_PREFS, logs);
-                driver = new ChromeDriver(desiredCapabilities);
+                DesiredCapabilities desiredCapabilitiesChrome = DesiredCapabilities.chrome();
+                desiredCapabilitiesChrome.setCapability(CapabilityType.LOGGING_PREFS, logs);
+                driver = new ChromeDriver(desiredCapabilitiesChrome);
                 return driver;
             case "firefox":
                 System.setProperty("webdriver.gecko.driver", "C:/firefoxdriver/geckodriver.exe");
-                desiredCapabilities = DesiredCapabilities.firefox();
-                desiredCapabilities.setCapability(CapabilityType.LOGGING_PREFS, logs);
-                driver = new FirefoxDriver(desiredCapabilities);
+                DesiredCapabilities desiredCapabilitiesFirefox = DesiredCapabilities.firefox();
+                desiredCapabilitiesFirefox.setCapability(CapabilityType.LOGGING_PREFS, logs);
+                driver = new FirefoxDriver(desiredCapabilitiesFirefox);
                 return driver;
             default:
                 throw new IllegalStateException("Unexpected value: " + browser);
