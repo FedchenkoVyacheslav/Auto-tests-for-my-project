@@ -11,9 +11,10 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
+import static ui.testData.URL;
+
 public class RegisterITCase {
     static WebDriver driver;
-    private final String URL = "https://fedchenkovyacheslav.github.io/";
     MainPage myMainPage;
 
     @BeforeEach
@@ -26,7 +27,7 @@ public class RegisterITCase {
     }
 
     @ParameterizedTest
-    @MethodSource("testData#validRegisterData")
+    @MethodSource("ui.testData#validRegisterData")
     @DisplayName("Should register new user")
     public void registerNewUser(String email, String name, String surname, String password, String location, String age) {
         myMainPage
@@ -43,7 +44,7 @@ public class RegisterITCase {
     }
 
     @ParameterizedTest
-    @MethodSource("testData#registerValidationTestData")
+    @MethodSource("ui.testData#registerValidationTestData")
     @DisplayName("Should check validation errors in registration popup")
     public void checkValidationErrorsOnRegister(String email, String name, String surname, String password, String passwordRep, String location, String age, String errorMessage) {
         myMainPage

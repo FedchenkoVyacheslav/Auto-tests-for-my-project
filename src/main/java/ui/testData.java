@@ -1,3 +1,5 @@
+package ui;
+
 import ui.Pages.BasePage;
 import org.junit.jupiter.params.provider.Arguments;
 

@@ -9,9 +9,10 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
+import static ui.testData.URL;
+
 public class LoginITCase {
     static WebDriver driver;
-    private final String URL = "https://fedchenkovyacheslav.github.io/";
     MainPage myMainPage;
 
     @BeforeEach
@@ -38,7 +39,7 @@ public class LoginITCase {
     }
 
     @ParameterizedTest
-    @MethodSource("testData#loginValidationTestData")
+    @MethodSource("ui.testData#loginValidationTestData")
     @DisplayName("Should check validation errors in login popup")
     public void checkValidationErrorsOnLogin(String email, String password, String validationError) {
         myMainPage
