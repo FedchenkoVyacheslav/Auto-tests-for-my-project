@@ -1,31 +1,23 @@
 package ui;
 
-import com.github.javafaker.Faker;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import ui.Actions.PrepareDriver;
-import ui.Pages.BasePage;
 import ui.Pages.MainPage;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class DeleteProfileITCase {
-    Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String NAME = faker.name().firstName();
-    private final String SURNAME = faker.name().lastName();
-    private final String PASSWORD = faker.internet().password();
-    private final String LOCATION = faker.address().city();
-    private final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
-    private final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
     MainPage myMainPage;
 
-    @Before
-    public void setup(){
+    @BeforeEach
+    public void setup() {
         driver = PrepareDriver.driverInit("chrome");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -33,26 +25,28 @@ public class DeleteProfileITCase {
         myMainPage = new MainPage(driver);
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("testData#validRegisterData")
     @DisplayName("Should delete user")
-    public void deleteProfile(){
+    public void deleteProfile(String email, String name, String surname, String password, String location, String age) {
         myMainPage
                 .clickOnRegister()
-                .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
+                .registerUser(email, name, surname, password, password, location, age)
                 .clickOnSignIn()
-                .loginWithCredential(EMAIL, PASSWORD)
+                .loginWithCredential(email, password)
                 .goToProfilePage()
                 .clickOnDeleteAccountButton()
                 .clickOnDeleteAccountModalButton()
                 .checkUrlIsValid(URL)
                 .clickOnSignIn()
-                .typeEmail(EMAIL)
-                .typePassword(PASSWORD)
+                .typeEmail(email)
+                .typePassword(password)
+                .clickOnLogIn()
                 .checkErrorInLoginForm("This combination, mail and password were not found!");
     }
 
-    @After
-    public void quit(){
+    @AfterEach
+    public void quit() {
         driver.quit();
     }
 }

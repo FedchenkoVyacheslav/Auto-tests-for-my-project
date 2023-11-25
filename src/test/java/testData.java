@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import static api.utils.UserGenerator.faker;
 
 public class testData {
+    public static final String URL = "https://fedchenkovyacheslav.github.io/";
     public static final String NAME = faker.name().firstName();
     public static final String SURNAME = faker.name().lastName();
     public static final String PASSWORD = faker.internet().password();
