@@ -216,14 +216,12 @@ public class BasePage {
     }
 
     public BasePage checkErrorInLoginForm(String message) {
-        clickOnLogIn();
         checkInvalidMessage("form-sing-in", message);
         clearInvalidInput("form-sing-in", "input");
         return this;
     }
 
     public BasePage checkErrorInRegistrationForm(String message) {
-        clickOnSignUp();
         checkInvalidMessage("form-register", message);
         clearInvalidInput("form-register", "input");
         return this;

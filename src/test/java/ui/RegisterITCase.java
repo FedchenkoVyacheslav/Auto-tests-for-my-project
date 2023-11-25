@@ -1,32 +1,23 @@
 package ui;
 
-import com.github.javafaker.Faker;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import ui.Actions.PrepareDriver;
-import ui.Pages.BasePage;
 import ui.Pages.MainPage;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class RegisterITCase {
-    Faker faker = new Faker();
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final String NAME = faker.name().firstName();
-    private final String SURNAME = faker.name().lastName();
-    private final String PASSWORD = faker.internet().password();
-    private final String LOCATION = faker.address().city();
-    private final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
-    private final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
-    private final String REGISTER = "form-register";
     MainPage myMainPage;
 
-    @Before
-    public void setup(){
+    @BeforeEach
+    public void setup() {
         driver = PrepareDriver.driverInit("chrome");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -34,83 +25,35 @@ public class RegisterITCase {
         myMainPage = new MainPage(driver);
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("testData#validRegisterData")
     @DisplayName("Should register new user")
-    public void registerNewUser(){
+    public void registerNewUser(String email, String name, String surname, String password, String location, String age) {
         myMainPage
                 .clickOnRegister()
-                .registerUser(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE)
+                .registerUser(email, name, surname, password, password, location, age)
                 .clickOnSignIn()
-                .checkValidMessagesInForm(REGISTER)
-                .loginWithCredential(EMAIL, PASSWORD)
+                .checkValidMessagesInForm("form-register")
+                .loginWithCredential(email, password)
                 .goToProfilePage()
-                .confirmSavedValues(NAME, SURNAME, EMAIL, LOCATION, AGE)
+                .confirmSavedValues(name, surname, email, location, age)
                 .checkUrlIsValid(URL + "pages/profile/")
                 .clickOnSignOut()
                 .checkUrlIsValid(URL);
     }
 
-    @Test
+    @ParameterizedTest
+    @MethodSource("testData#registerValidationTestData")
     @DisplayName("Should check validation errors in registration popup")
-    public void checkValidationErrorsOnRegister(){
+    public void checkValidationErrorsOnRegister(String email, String name, String surname, String password, String passwordRep, String location, String age, String errorMessage) {
         myMainPage
                 .clickOnRegister()
-                .checkErrorInRegistrationForm("This field is required")
-                .typeRegisterEmail("1")
-                .checkErrorInRegistrationForm("Please enter a valid email address (your entry is not in the format \"somebody@example.com\")")
-                .typeRegisterEmail(EMAIL)
-
-                .checkErrorInRegistrationForm("This field is required")
-                .typeRegisterName("1")
-                .checkErrorInRegistrationForm("This name is not valid")
-                .typeRegisterName("a")
-                .checkErrorInRegistrationForm("Your name is too short or too long")
-                .typeRegisterName("qwertyuiopasdfghjklzx")
-                .checkErrorInRegistrationForm("Your name is too short or too long")
-                .typeRegisterName(NAME)
-
-                .checkErrorInRegistrationForm("This field is required")
-                .typeRegisterSurname("1")
-                .checkErrorInRegistrationForm("This surname is not valid")
-                .typeRegisterSurname("a")
-                .checkErrorInRegistrationForm("Your surname is too short or too long")
-                .typeRegisterSurname("qwertyuiopasdfghjklzx")
-                .checkErrorInRegistrationForm("Your surname is too short or too long")
-                .typeRegisterSurname(SURNAME)
-
-                .checkErrorInRegistrationForm("This field is required")
-                .typeRegisterPassword("1")
-                .checkErrorInRegistrationForm("Password must be between 3 and 20 characters")
-                .typeRegisterPassword("1234567890asdfghjklzx")
-                .checkErrorInRegistrationForm("Password must be between 3 and 20 characters")
-                .typeRegisterPassword(PASSWORD)
-
-                .checkErrorInRegistrationForm("This field is required")
-                .typeRegisterRepeatPassword("1")
-                .checkErrorInRegistrationForm("Password mismatch")
-                .typeRegisterRepeatPassword(PASSWORD)
-
-                .checkErrorInRegistrationForm("This field is required")
-                .typeRegisterLocation("1")
-                .checkErrorInRegistrationForm("This location is not valid")
-                .typeRegisterLocation("a")
-                .checkErrorInRegistrationForm("Location name is too short or too long")
-                .typeRegisterLocation("united states of america state california")
-                .checkErrorInRegistrationForm("Location name is too short or too long")
-                .typeRegisterLocation(LOCATION)
-
-                .typeRegisterAge("17")
-                .checkErrorInRegistrationForm("This age is not valid")
-                .typeRegisterAge("101")
-                .checkErrorInRegistrationForm("This age is not valid")
-                .typeRegisterAge(AGE)
-
-                .clickOnSignUp()
-                .checkConsentError(REGISTER);
+                .registerUser(email, name, surname, password, passwordRep, location, age)
+                .checkErrorInRegistrationForm(errorMessage);
     }
 
-    @After
-    public void quit(){
+    @AfterEach
+    public void quit() {
         driver.quit();
     }
 }

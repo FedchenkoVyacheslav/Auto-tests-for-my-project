@@ -8,21 +8,11 @@ import ui.Pages.MainPage;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 public class LoginITCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
     MainPage myMainPage;
-
-    private static Stream<Arguments> testData() {
-        return Stream.of(
-                Arguments.of("", "1", "This field is required"),
-                Arguments.of("1", "1", "Please enter a valid email address (your entry is not in the format \"somebody@example.com\")"),
-                Arguments.of("test@mail.com", "", "This field is required"),
-                Arguments.of("test@mail.com", "1", "This combination, mail and password were not found!")
-        );
-    }
 
     @BeforeEach
     public void setup() {
@@ -48,7 +38,7 @@ public class LoginITCase {
     }
 
     @ParameterizedTest
-    @MethodSource("testData")
+    @MethodSource("testData#loginValidationTestData")
     @DisplayName("Should check validation errors in login popup")
     public void checkValidationErrorsOnLogin(String email, String password, String validationError) {
         myMainPage

@@ -5,7 +5,7 @@ import com.github.javafaker.Faker;
 import ui.Pages.BasePage;
 
 public class UserGenerator {
-    static Faker faker = new Faker();
+    public static Faker faker = new Faker();
     private static final String NAME = faker.name().firstName();
     private static final String SURNAME = faker.name().lastName();
     private static final String PASSWORD = faker.internet().password();
