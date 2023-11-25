@@ -1,11 +1,10 @@
 package ui;
 
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import ui.Actions.PrepareDriver;
 import ui.Pages.MainPage;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -13,11 +12,11 @@ import java.util.concurrent.TimeUnit;
 public class BlogFilterITCase {
     static WebDriver driver;
     private final String URL = "https://fedchenkovyacheslav.github.io/";
-    private final int[] ALL_TAGS = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    private final int[] ALL_TAGS = {1, 2, 3, 4, 5, 6, 7, 8};
     MainPage myMainPage;
 
-    @Before
-    public void setup(){
+    @BeforeEach
+    public void setup() {
         driver = PrepareDriver.driverInit("chrome");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
@@ -25,96 +24,84 @@ public class BlogFilterITCase {
         myMainPage = new MainPage(driver);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})
     @DisplayName("Should group posts by selected tags")
-    public void searchGroupByTags(){
+    public void searchGroupByTags(int tag) {
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
-                .checkTag(7)
+                .checkTag(tag)
                 .clickOnSearch()
-                .checkTagInBlog(7);
+                .checkTagInBlog(tag);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"100-500", "500-1000", "1000-2000"})
     @DisplayName("Should group posts by number of views")
-    public void searchGroupByViews(){
+    public void searchGroupByViews(String views) {
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
                 .checkTags(ALL_TAGS)
-                .showNumberOfViews("100-500")
+                .showNumberOfViews(views)
                 .clickOnSearch()
-                .checkNumberOfViewsInBlogs("100-500")
-                .showNumberOfViews("500-1000")
-                .clickOnSearch()
-                .checkNumberOfViewsInBlogs("500-1000")
-                .showNumberOfViews("1000-2000")
-                .clickOnSearch()
-                .checkNumberOfViewsInBlogs("1000-2000");
+                .checkNumberOfViewsInBlogs(views);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"0", "0-1", "1-50"})
     @DisplayName("Should group posts by number of comments")
-    public void searchGroupByComments(){
+    public void searchGroupByComments(String comments) {
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
                 .checkTags(ALL_TAGS)
-                .checkCommentsCount("0")
+                .checkCommentsCount(comments)
                 .clickOnSearch()
-                .checkNumberOfCommentsInBlogs("0")
-                .clickOnReset()
-                .checkTags(ALL_TAGS)
-                .checkCommentsCount("0-1")
-                .clickOnSearch()
-                .checkNumberOfCommentsInBlogs("0-1")
-                .clickOnReset()
-                .checkTags(ALL_TAGS)
-                .checkCommentsCount("1-50")
-                .clickOnSearch()
-                .checkNumberOfCommentsInBlogs("1-50");
+                .checkNumberOfCommentsInBlogs(comments);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"how", "about", "what"})
     @DisplayName("Should get posts by partial match with search query")
-    public void searchGroupByPartialWordsMatch(){
+    public void searchGroupByPartialWordsMatch(String searchQuery) {
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
                 .checkTags(ALL_TAGS)
-                .typeSearchQuery("and")
+                .typeSearchQuery(searchQuery)
                 .clickOnSearch()
-                .checkPartialSearchMatch("and");
+                .checkPartialSearchMatch(searchQuery);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(ints = {10, 5})
     @DisplayName("Should change number of posts displayed on page")
-    public void showNumberOfResultsPerPage(){
+    public void showNumberOfResultsPerPage(int number) {
         myMainPage
                 .goToBlogPage()
                 .clickOnReset()
                 .checkTags(ALL_TAGS)
-                .showNumberOfBlogs("show 10")
+                .showNumberOfBlogs(number)
                 .clickOnSearch()
-                .checkNumberOfBlogsOnPage(10)
-                .showNumberOfBlogs("show 5")
-                .clickOnSearch()
-                .checkNumberOfBlogsOnPage(5);
+                .checkNumberOfBlogsOnPage(number);
     }
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"test"})
     @DisplayName("Should clear search filter")
-    public void checkResetSearchFilter(){
+    public void checkResetSearchFilter(String searchQuery) {
         myMainPage
                 .goToBlogPage()
+                .typeSearchQuery(searchQuery)
                 .clickOnReset()
                 .clickOnSearch()
                 .checkEmptyResultOnSearch();
     }
 
-    @After
-    public void quit(){
+    @AfterEach
+    public void quit() {
         driver.quit();
     }
 }

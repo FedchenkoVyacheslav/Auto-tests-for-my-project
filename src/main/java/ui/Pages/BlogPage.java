@@ -35,12 +35,12 @@ public class BlogPage extends BasePage {
     @FindBy(xpath = "//input[@id='filter-search']")
     private WebElement searchInput;
 
-    public BlogPage showNumberOfBlogs(String number) {
+    public BlogPage showNumberOfBlogs(int number) {
         switch (number) {
-            case "show 5":
+            case 5:
                 radioButton5Blogs.click();
                 return this;
-            case "show 10":
+            case 10:
                 radioButton10Blogs.click();
                 return this;
             default:
@@ -84,9 +84,14 @@ public class BlogPage extends BasePage {
 
     public BlogPage checkTagInBlog(int tagNumber) {
         List<WebElement> blogTags = driver.findElements(By.xpath("//li[contains(@class, 'blog__tag')]"));
+        List<WebElement> blogs = driver.findElements(By.xpath("//div[@class='blog__content']"));
+        int count = 0;
         for (WebElement blogTag : blogTags) {
-            assertEquals(tagNumber, parseInt(blogTag.getAttribute("ariaLabel").replaceAll("\\D+", "")));
+            if (parseInt(blogTag.getAttribute("ariaLabel").replaceAll("\\D+", "")) == tagNumber) {
+                count++;
+            }
         }
+        assertEquals(blogs.size(), count);
         return this;
     }
 
