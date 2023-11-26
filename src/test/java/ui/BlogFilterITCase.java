@@ -9,11 +9,10 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import static ui.testData.URL;
+import static ui.testData.*;
 
 public class BlogFilterITCase {
     static WebDriver driver;
-    private final int[] ALL_TAGS = {1, 2, 3, 4, 5, 6, 7, 8};
     MainPage myMainPage;
 
     @BeforeEach

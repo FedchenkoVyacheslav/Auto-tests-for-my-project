@@ -15,6 +15,7 @@ public class testData {
     public static final String LOCATION = faker.address().city();
     public static final String AGE = String.valueOf((int) (Math.random() * (100 - 18)) + 18);
     public static final String EMAIL = BasePage.getUserEmail(NAME, SURNAME, AGE);
+    public static final int[] ALL_TAGS = {1, 2, 3, 4, 5, 6, 7, 8};
 
     public static Stream<Arguments> registerValidationTestData() {
         return Stream.of(
@@ -44,7 +45,7 @@ public class testData {
 
     public static Stream<Arguments> validRegisterData() {
         return Stream.of(
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, LOCATION, AGE)
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, LOCATION, AGE, "This combination, mail and password were not found!")
         );
     }
 

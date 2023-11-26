@@ -29,7 +29,7 @@ public class DeleteProfileITCase {
     @ParameterizedTest
     @MethodSource("ui.testData#validRegisterData")
     @DisplayName("Should delete user")
-    public void deleteProfile(String email, String name, String surname, String password, String location, String age) {
+    public void deleteProfile(String email, String name, String surname, String password, String location, String age, String errorMessage) {
         myMainPage
                 .clickOnRegister()
                 .registerUser(email, name, surname, password, password, location, age)
@@ -43,7 +43,7 @@ public class DeleteProfileITCase {
                 .typeEmail(email)
                 .typePassword(password)
                 .clickOnLogIn()
-                .checkErrorInLoginForm("This combination, mail and password were not found!");
+                .checkErrorInLoginForm(errorMessage);
     }
 
     @AfterEach
