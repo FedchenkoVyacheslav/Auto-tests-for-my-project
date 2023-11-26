@@ -18,6 +18,13 @@ public class testData {
     public static final String MESSAGE = faker.howIMetYourMother().catchPhrase();
     public static final String PHONE = "+1 234 567-89-00";
     public static final String TEXT = faker.howIMetYourMother().quote();
+    public static final String NEW_NAME = "Keanu";
+    public static final String NEW_SURNAME = "Reeves";
+    public static final String NEW_AGE = String.valueOf(BasePage.getCurrentYear() - 1964);
+    public static final String NEW_EMAIL = EMAIL;
+    public static final String NEW_PASSWORD = "12345678";
+    public static final String NEW_LOCATION = "Toronto";
+    public static final String PATH = "src/test/resources/testData/neo_matrix.jpg";
     public static final int[] ALL_TAGS = {1, 2, 3, 4, 5, 6, 7, 8};
 
     public static Stream<Arguments> registerValidationTestData() {
@@ -55,6 +62,53 @@ public class testData {
     public static Stream<Arguments> validMessageData() {
         return Stream.of(
                 Arguments.of(NAME, MESSAGE, EMAIL, PHONE, TEXT)
+        );
+    }
+
+    public static Stream<Arguments> validPasswordData() {
+        return Stream.of(
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, NEW_PASSWORD, LOCATION, AGE)
+        );
+    }
+
+    public static Stream<Arguments> passwordEditValidationTestData() {
+        return Stream.of(
+                Arguments.of("", "", "", "This field is required"),
+                Arguments.of(PASSWORD, "", "", "This field is required"),
+                Arguments.of(PASSWORD, "1", "", "Password must be between 3 and 20 characters"),
+                Arguments.of(PASSWORD, "1234567890asdfghjklzx", "", "Password must be between 3 and 20 characters"),
+                Arguments.of(PASSWORD, PASSWORD, "", "The new password cannot be the same as the old"),
+                Arguments.of(PASSWORD, NEW_PASSWORD, "", "This field is required"),
+                Arguments.of(PASSWORD, NEW_PASSWORD, "1", "New password mismatch")
+        );
+    }
+
+    public static Stream<Arguments> validUserData() {
+        return Stream.of(
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, LOCATION, AGE, NEW_EMAIL, NEW_NAME, NEW_SURNAME, NEW_LOCATION, NEW_AGE)
+        );
+    }
+
+    public static Stream<Arguments> userEditValidationTestData() {
+        return Stream.of(
+                Arguments.of("", "", "", "", "", "This field is required"),
+                Arguments.of("1", "", "", "", "", "Please enter a valid email address (your entry is not in the format \"somebody@example.com\")"),
+                Arguments.of(NEW_EMAIL, "", "", "", "", "This field is required"),
+                Arguments.of(NEW_EMAIL, "1", "", "", "", "This name is not valid"),
+                Arguments.of(NEW_EMAIL, "a", "", "", "", "Your name is too short or too long"),
+                Arguments.of(NEW_EMAIL, "qwertyuiopasdfghjklzx", "", "", "", "Your name is too short or too long"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, "", "", "", "This field is required"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, "1", "", "", "This surname is not valid"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, "a", "", "", "Your surname is too short or too long"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, "qwertyuiopasdfghjklzx", "", "", "Your surname is too short or too long"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, "", "", "This field is required"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, "1", "", "This location is not valid"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, "a", "", "Location name is too short or too long"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, "united states of america state california", "", "Location name is too short or too long"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, NEW_LOCATION, "", "This field is required"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, NEW_LOCATION, "-1", "This age is not valid"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, NEW_LOCATION, "101", "This age is not valid"),
+                Arguments.of(NEW_EMAIL, NEW_NAME, NEW_SURNAME, NEW_LOCATION, NEW_AGE, "You forgot to choose a photo")
         );
     }
 

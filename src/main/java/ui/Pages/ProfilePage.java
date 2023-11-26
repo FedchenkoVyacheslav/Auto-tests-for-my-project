@@ -161,6 +161,17 @@ public class ProfilePage extends BasePage {
         return this;
     }
 
+    public ProfilePage changeData(String email, String name, String surname, String location, String age) {
+        this.typeNewEmail(email);
+        this.typeNewName(name);
+        this.typeNewSurname(surname);
+        this.typeNewLocation(location);
+        this.typeNewAge(age);
+        clickOnSubmitDataButton();
+        pause(3000);
+        return this;
+    }
+
     public ProfilePage checkInputErrorInChangePasswordForm(String message) {
         clickOnChangePasswordModalButton();
         checkInvalidMessage("form-password-edit", message);
