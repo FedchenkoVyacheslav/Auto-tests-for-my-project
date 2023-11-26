@@ -72,6 +72,12 @@ public class MainPage extends BasePage {
         return this;
     }
 
+    public MainPage checkInputErrorMessage(String message, boolean input){
+        if (input) checkInputErrorInMessageForm(message);
+        else checkTextAreaErrorInMessageForm(message);
+        return this;
+    }
+
     public MainPage checkInputErrorInMessageForm(String message) {
         clickOnConfirmSendMessage();
         checkInvalidMessage("form-message", message);
