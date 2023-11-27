@@ -25,6 +25,8 @@ public class testData {
     public static final String NEW_PASSWORD = "12345678";
     public static final String NEW_LOCATION = "Toronto";
     public static final String PATH = "src/test/resources/testData/neo_matrix.jpg";
+    public static final String L_EMAIL = "g1@gmail.com";
+    public static final String L_PASSWORD = "12345678";
     public static final int[] ALL_TAGS = {1, 2, 3, 4, 5, 6, 7, 8};
 
     public static Stream<Arguments> registerValidationTestData() {

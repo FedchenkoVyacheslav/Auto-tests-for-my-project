@@ -76,7 +76,7 @@ public class EditProfileITCase {
     public void checkValidationErrorsOnEditPassword(String password, String newPassword, String newPasswordRepeat, String errorMessage) {
         myMainPage
                 .clickOnSignIn()
-                .loginWithCredential("g1@gmail.com", "12345678")
+                .loginWithCredential(L_EMAIL, L_PASSWORD)
                 .goToProfilePage()
                 .clickOnChangePasswordButton()
                 .changePassword(password, newPassword, newPasswordRepeat)
@@ -89,7 +89,7 @@ public class EditProfileITCase {
     public void checkValidationErrorsOnEditData(String newEmail, String newName, String newSurname, String newLocation, String newAge, String errorMessage) {
         myMainPage
                 .clickOnSignIn()
-                .loginWithCredential("g1@gmail.com", "12345678")
+                .loginWithCredential(L_EMAIL, L_PASSWORD)
                 .goToProfilePage()
                 .clickOnChangeDataButton()
                 .changeData(newEmail, newName, newSurname, newLocation, newAge)
