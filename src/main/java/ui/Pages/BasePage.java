@@ -17,9 +17,11 @@ import java.util.List;
 public class BasePage {
     protected final WebDriver driver;
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+
     public static int getCurrentYear() {
         return Integer.parseInt(sdf.format(new Date()));
     }
+
     public static String getBirthYear(String age) {
         int birthYear = getCurrentYear() - Integer.parseInt(age);
         return String.valueOf(birthYear);
@@ -209,9 +211,11 @@ public class BasePage {
         return this;
     }
 
-    public BasePage checkConsentError(String formClass) {
-        WebElement invalidCheckbox = driver.findElement(By.xpath("//form[@name='" + formClass + "']//span[contains(@class, 'form__checkbox-indicator_bad')]"));
-        assertNotNull(invalidCheckbox);
+    public BasePage checkConsentError(String formClass, boolean consentCheck) {
+        if (!consentCheck) {
+            WebElement invalidCheckbox = driver.findElement(By.xpath("//form[@name='" + formClass + "']//span[contains(@class, 'form__checkbox-indicator_bad')]"));
+            assertNotNull(invalidCheckbox);
+        }
         return this;
     }
 

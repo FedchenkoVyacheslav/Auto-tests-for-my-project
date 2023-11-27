@@ -61,20 +61,22 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    public MainPage sendMessage(String name, String message, String email, String phone, String textMessage) {
+    public MainPage sendMessage(String name, String message, String email, String phone, String textMessage, boolean consent) {
         this.typeName(name);
         this.typeMessage(message);
         this.typeMessageEmail(email);
         this.typePhone(phone);
         this.typeTextMessage(textMessage);
-        this.checkConsentMessage("form-message");
+        if(consent) this.checkConsentMessage("form-message");
         clickOnConfirmSendMessage();
         return this;
     }
 
-    public MainPage checkInputErrorMessage(String message, boolean input){
-        if (input) checkInputErrorInMessageForm(message);
-        else checkTextAreaErrorInMessageForm(message);
+    public MainPage checkInputErrorMessage(String message, boolean input, boolean consentCheck){
+        if (consentCheck) {
+            if (input) checkInputErrorInMessageForm(message);
+            else checkTextAreaErrorInMessageForm(message);
+        }
         return this;
     }
 

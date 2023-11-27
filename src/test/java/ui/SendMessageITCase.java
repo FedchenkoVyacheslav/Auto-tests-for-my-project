@@ -29,21 +29,22 @@ public class SendMessageITCase {
     @ParameterizedTest
     @MethodSource("ui.testData#validMessageData")
     @DisplayName("Should send new message")
-    public void sendMessage(String name, String message, String email, String phone, String text) {
+    public void sendMessage(String name, String message, String email, String phone, String text, boolean consent) {
         myMainPage
                 .clickOnSendMessage()
-                .sendMessage(name, message, email, phone, text)
+                .sendMessage(name, message, email, phone, text, consent)
                 .checkValidMessagesInForm("form-message");
     }
 
     @ParameterizedTest
     @MethodSource("ui.testData#messageValidationTestData")
     @DisplayName("Should check validation errors in send message popup")
-    public void checkValidationErrors(String name, String message, String email, String phone, String text, String errorMessage, boolean formFlag) {
+    public void checkValidationErrors(String name, String message, String email, String phone, String text, String errorMessage, boolean formFlag, boolean consent) {
         myMainPage
                 .clickOnSendMessage()
-                .sendMessage(name, message, email, phone, text)
-                .checkInputErrorMessage(errorMessage, formFlag);
+                .sendMessage(name, message, email, phone, text, consent)
+                .checkInputErrorMessage(errorMessage, formFlag, consent)
+                .checkConsentError("form-message", consent);
     }
 
     @AfterEach

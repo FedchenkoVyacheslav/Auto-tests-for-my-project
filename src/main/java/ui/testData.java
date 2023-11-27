@@ -63,7 +63,7 @@ public class testData {
 
     public static Stream<Arguments> validMessageData() {
         return Stream.of(
-                Arguments.of(NAME, MESSAGE, EMAIL, PHONE, TEXT)
+                Arguments.of(NAME, MESSAGE, EMAIL, PHONE, TEXT, true)
         );
     }
 
@@ -116,19 +116,20 @@ public class testData {
 
     public static Stream<Arguments> messageValidationTestData() {
         return Stream.of(
-                Arguments.of("1", "", "", "", "", "This name is not valid", true),
-                Arguments.of("a", "", "", "", "", "Your name is too short or too long", true),
-                Arguments.of("qwertyuiopasdfghjklzx", "", "", "", "", "Your name is too short or too long", true),
-                Arguments.of(NAME, "", "", "", "", "This field is required", true),
-                Arguments.of(NAME, "1", "", "", "", "This message is not valid", true),
-                Arguments.of(NAME, "a", "", "", "", "Your message is too short or too long", true),
-                Arguments.of(NAME, "qwertyuiopasdfghjklzx", "", "", "", "Your message is too short or too long", true),
-                Arguments.of(NAME, MESSAGE, "", "", "", "This field is required", true),
-                Arguments.of(NAME, MESSAGE, "1", "", "", "Please enter a valid email address (your entry is not in the format \"somebody@example.com\")", true),
-                Arguments.of(NAME, MESSAGE, EMAIL, "", "", "This field is required", true),
-                Arguments.of(NAME, MESSAGE, EMAIL, "1", "", "Please enter a valid phone number", true),
-                Arguments.of(NAME, MESSAGE, EMAIL, PHONE, "", "This field is required", false),
-                Arguments.of(NAME, MESSAGE, EMAIL, PHONE, "1", "Your message is too short", false)
+                Arguments.of("1", "", "", "", "", "This name is not valid", true, true),
+                Arguments.of("a", "", "", "", "", "Your name is too short or too long", true, true),
+                Arguments.of("qwertyuiopasdfghjklzx", "", "", "", "", "Your name is too short or too long", true, true),
+                Arguments.of(NAME, "", "", "", "", "This field is required", true, true),
+                Arguments.of(NAME, "1", "", "", "", "This message is not valid", true, true),
+                Arguments.of(NAME, "a", "", "", "", "Your message is too short or too long", true, true),
+                Arguments.of(NAME, "qwertyuiopasdfghjklzx", "", "", "", "Your message is too short or too long", true, true),
+                Arguments.of(NAME, MESSAGE, "", "", "", "This field is required", true, true),
+                Arguments.of(NAME, MESSAGE, "1", "", "", "Please enter a valid email address (your entry is not in the format \"somebody@example.com\")", true, true),
+                Arguments.of(NAME, MESSAGE, EMAIL, "", "", "This field is required", true, true),
+                Arguments.of(NAME, MESSAGE, EMAIL, "1", "", "Please enter a valid phone number", true, true),
+                Arguments.of(NAME, MESSAGE, EMAIL, PHONE, "", "This field is required", false, true),
+                Arguments.of(NAME, MESSAGE, EMAIL, PHONE, "1", "Your message is too short", false, true),
+                Arguments.of(NAME, MESSAGE, EMAIL, PHONE, MESSAGE, null, false, false)
         );
     }
 
