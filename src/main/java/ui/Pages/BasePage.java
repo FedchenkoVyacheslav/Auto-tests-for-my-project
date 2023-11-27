@@ -148,7 +148,7 @@ public class BasePage {
         return this;
     }
 
-    public BasePage registerUser(String email, String name, String surname, String password, String passwordRep, String location, String age) {
+    public BasePage registerUser(String email, String name, String surname, String password, String passwordRep, String location, String age, boolean consent) {
         this.typeRegisterEmail(email);
         this.typeRegisterName(name);
         this.typeRegisterSurname(surname);
@@ -156,7 +156,7 @@ public class BasePage {
         this.typeRegisterRepeatPassword(passwordRep);
         this.typeRegisterLocation(location);
         this.typeRegisterAge(age);
-        this.checkConsentMessage("form-register");
+        if (consent) this.checkConsentMessage("form-register");
         clickOnSignUp();
         pause(2000);
         return this;
@@ -225,9 +225,11 @@ public class BasePage {
         return this;
     }
 
-    public BasePage checkErrorInRegistrationForm(String message) {
-        checkInvalidMessage("form-register", message);
-        clearInvalidInput("form-register", "input");
+    public BasePage checkErrorInRegistrationForm(String message, boolean consentCheck) {
+        if (consentCheck) {
+            checkInvalidMessage("form-register", message);
+            clearInvalidInput("form-register", "input");
+        }
         return this;
     }
 

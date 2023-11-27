@@ -33,7 +33,7 @@ public class EditProfileITCase {
     public void editPassword(String email, String name, String surname, String password, String newPassword, String location, String age) {
         myMainPage
                 .clickOnRegister()
-                .registerUser(email, name, surname, password, password, location, age)
+                .registerUser(email, name, surname, password, password, location, age, true)
                 .clickOnSignIn()
                 .loginWithCredential(email, password)
                 .goToProfilePage()
@@ -54,7 +54,7 @@ public class EditProfileITCase {
                          String newEmail, String newName, String newSurname, String newLocation, String newAge) {
         myMainPage
                 .clickOnRegister()
-                .registerUser(email, name, surname, password, password, location, age)
+                .registerUser(email, name, surname, password, password, location, age, true)
                 .clickOnSignIn()
                 .loginWithCredential(email, password)
                 .goToProfilePage()

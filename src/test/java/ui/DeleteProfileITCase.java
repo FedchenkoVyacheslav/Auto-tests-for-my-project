@@ -29,10 +29,10 @@ public class DeleteProfileITCase {
     @ParameterizedTest
     @MethodSource("ui.testData#validRegisterData")
     @DisplayName("Should delete user")
-    public void deleteProfile(String email, String name, String surname, String password, String location, String age, String errorMessage) {
+    public void deleteProfile(String email, String name, String surname, String password, String location, String age, boolean consent, String errorMessage) {
         myMainPage
                 .clickOnRegister()
-                .registerUser(email, name, surname, password, password, location, age)
+                .registerUser(email, name, surname, password, password, location, age, consent)
                 .clickOnSignIn()
                 .loginWithCredential(email, password)
                 .goToProfilePage()

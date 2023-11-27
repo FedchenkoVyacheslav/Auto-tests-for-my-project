@@ -39,11 +39,11 @@ public class SendMessageITCase {
     @ParameterizedTest
     @MethodSource("ui.testData#messageValidationTestData")
     @DisplayName("Should check validation errors in send message popup")
-    public void checkValidationErrors(String name, String message, String email, String phone, String text, String errorMessage, boolean formFlag, boolean consent) {
+    public void checkValidationErrors(String name, String message, String email, String phone, String text, String errorMessage, boolean inputFlag, boolean consent) {
         myMainPage
                 .clickOnSendMessage()
                 .sendMessage(name, message, email, phone, text, consent)
-                .checkInputErrorMessage(errorMessage, formFlag, consent)
+                .checkInputErrorMessage(errorMessage, inputFlag, consent)
                 .checkConsentError("form-message", consent);
     }
 

@@ -72,9 +72,9 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    public MainPage checkInputErrorMessage(String message, boolean input, boolean consentCheck){
+    public MainPage checkInputErrorMessage(String message, boolean inputFlag, boolean consentCheck){
         if (consentCheck) {
-            if (input) checkInputErrorInMessageForm(message);
+            if (inputFlag) checkInputErrorInMessageForm(message);
             else checkTextAreaErrorInMessageForm(message);
         }
         return this;

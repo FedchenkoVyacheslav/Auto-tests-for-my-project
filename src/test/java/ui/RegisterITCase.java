@@ -29,10 +29,10 @@ public class RegisterITCase {
     @ParameterizedTest
     @MethodSource("ui.testData#validRegisterData")
     @DisplayName("Should register new user")
-    public void registerNewUser(String email, String name, String surname, String password, String location, String age) {
+    public void registerNewUser(String email, String name, String surname, String password, String location, String age, boolean consent) {
         myMainPage
                 .clickOnRegister()
-                .registerUser(email, name, surname, password, password, location, age)
+                .registerUser(email, name, surname, password, password, location, age, consent)
                 .clickOnSignIn()
                 .checkValidMessagesInForm("form-register")
                 .loginWithCredential(email, password)
@@ -46,11 +46,12 @@ public class RegisterITCase {
     @ParameterizedTest
     @MethodSource("ui.testData#registerValidationTestData")
     @DisplayName("Should check validation errors in registration popup")
-    public void checkValidationErrorsOnRegister(String email, String name, String surname, String password, String passwordRep, String location, String age, String errorMessage) {
+    public void checkValidationErrorsOnRegister(String email, String name, String surname, String password, String passwordRep, String location, String age, boolean consent, String errorMessage) {
         myMainPage
                 .clickOnRegister()
-                .registerUser(email, name, surname, password, passwordRep, location, age)
-                .checkErrorInRegistrationForm(errorMessage);
+                .registerUser(email, name, surname, password, passwordRep, location, age, consent)
+                .checkErrorInRegistrationForm(errorMessage, consent)
+                .checkConsentError("form-register", consent);
     }
 
     @AfterEach

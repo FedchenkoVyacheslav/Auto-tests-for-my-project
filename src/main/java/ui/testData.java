@@ -31,33 +31,34 @@ public class testData {
 
     public static Stream<Arguments> registerValidationTestData() {
         return Stream.of(
-                Arguments.of("", "", "", "", "", "", "", "This field is required"),
-                Arguments.of("1", "", "", "", "", "", "", "Please enter a valid email address (your entry is not in the format \"somebody@example.com\")"),
-                Arguments.of(EMAIL, "", "", "", "", "", "", "This field is required"),
-                Arguments.of(EMAIL, "1", "", "", "", "", "", "This name is not valid"),
-                Arguments.of(EMAIL, "a", "", "", "", "", "", "Your name is too short or too long"),
-                Arguments.of(EMAIL, "qwertyuiopasdfghjklzx", "", "", "", "", "", "Your name is too short or too long"),
-                Arguments.of(EMAIL, NAME, "", "", "", "", "", "This field is required"),
-                Arguments.of(EMAIL, NAME, "1", "", "", "", "", "This surname is not valid"),
-                Arguments.of(EMAIL, NAME, "a", "", "", "", "", "Your surname is too short or too long"),
-                Arguments.of(EMAIL, NAME, "qwertyuiopasdfghjklzx", "", "", "", "", "Your surname is too short or too long"),
-                Arguments.of(EMAIL, NAME, SURNAME, "", "", "", "", "This field is required"),
-                Arguments.of(EMAIL, NAME, SURNAME, "1", "", "", "", "Password must be between 3 and 20 characters"),
-                Arguments.of(EMAIL, NAME, SURNAME, "1234567890asdfghjklzx", "", "", "", "Password must be between 3 and 20 characters"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, "", "", "", "This field is required"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, "1", "", "", "Password mismatch"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "", "", "This field is required"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "1", "", "This location is not valid"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "a", "", "Location name is too short or too long"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "united states of america state california", "", "Location name is too short or too long"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, "17", "This age is not valid"),
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, "101", "This age is not valid")
+                Arguments.of("", "", "", "", "", "", "", true, "This field is required"),
+                Arguments.of("1", "", "", "", "", "", "", true, "Please enter a valid email address (your entry is not in the format \"somebody@example.com\")"),
+                Arguments.of(EMAIL, "", "", "", "", "", "", true, "This field is required"),
+                Arguments.of(EMAIL, "1", "", "", "", "", "", true, "This name is not valid"),
+                Arguments.of(EMAIL, "a", "", "", "", "", "", true, "Your name is too short or too long"),
+                Arguments.of(EMAIL, "qwertyuiopasdfghjklzx", "", "", "", "", "", true, "Your name is too short or too long"),
+                Arguments.of(EMAIL, NAME, "", "", "", "", "", true, "This field is required"),
+                Arguments.of(EMAIL, NAME, "1", "", "", "", "", true, "This surname is not valid"),
+                Arguments.of(EMAIL, NAME, "a", "", "", "", "", true, "Your surname is too short or too long"),
+                Arguments.of(EMAIL, NAME, "qwertyuiopasdfghjklzx", "", "", "", "", true, "Your surname is too short or too long"),
+                Arguments.of(EMAIL, NAME, SURNAME, "", "", "", "", true, "This field is required"),
+                Arguments.of(EMAIL, NAME, SURNAME, "1", "", "", "", true, "Password must be between 3 and 20 characters"),
+                Arguments.of(EMAIL, NAME, SURNAME, "1234567890asdfghjklzx", "", "", "", true, "Password must be between 3 and 20 characters"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, "", "", "", true, "This field is required"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, "1", "", "", true, "Password mismatch"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "", "", true, "This field is required"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "1", "", true, "This location is not valid"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "a", "", true, "Location name is too short or too long"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, "united states of america state california", "", true, "Location name is too short or too long"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, "17", true, "This age is not valid"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, "101", true, "This age is not valid"),
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, PASSWORD, LOCATION, AGE, false, null)
         );
     }
 
     public static Stream<Arguments> validRegisterData() {
         return Stream.of(
-                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, LOCATION, AGE, "This combination, mail and password were not found!")
+                Arguments.of(EMAIL, NAME, SURNAME, PASSWORD, LOCATION, AGE, true, "This combination, mail and password were not found!")
         );
     }
 
