@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class BasePage {
+public abstract class BasePage {
     protected final WebDriver driver;
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 
